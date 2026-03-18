@@ -1,0 +1,34 @@
+@if (messages.length > 0) {
+  <div
+      class="flash-message-container control-icon more has-items"
+  >
+    <div class="more-dropdown more-with-triangle triangle-top-center" style="visibility: visible; opacity: unset;">
+      <div class="mCustomScrollbar" data-mcs-theme="dark">
+        <ul class="notification-list">
+          @for (message of messages; track message.id) {
+            <li [ngClass]="uiService.getClassByLevel(message.message.messageLevel)">
+              <div class="notification-event">
+                <div>{{ message.message.message }}</div>
+                @if (message.message.errorCode) {
+                  <span class="notification-date">
+                      <span class="entry-date updated">
+                          Error code: {{ message.message.errorCode }}
+                      </span>
+                  </span>
+                }
+              </div>
+              <div class="more">
+                <svg
+                    (click)="hide(message.id)"
+                    class="olymp-little-delete"
+                >
+                  <use xlink:href="#olymp-little-delete"></use>
+                </svg>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+}

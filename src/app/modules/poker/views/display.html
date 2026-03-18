@@ -1,0 +1,76 @@
+@if (state$ | async; as state) {
+  @if (state.initDone) {
+    <div class="ui-block" style="margin-top: 50px;">
+      <div class="birthday-item inline-items badges table-dark">
+        <div class="birthday-author-name">
+          <div class="h2 author-name" style="color: #ff5e3a">{{ state.poker.name }}</div>
+          <div class="birthday-item inline-items" style="padding: 0 0 0 30px">
+            <div class="author-thumb">
+              <button
+                  (click)="copyShareLink()"
+                  class="btn btn-primary btn-sm"
+                  title="Copy share link"
+                  style="padding-right: 30px;padding-top: 15px"
+              >
+                <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="birthday-author-name" style="padding-top: 15px">
+              <div class="birthday-date"><strong>Share poker link</strong></div>
+              <div class="birthday-date share-link">{{ appHost }}poker/display/{{ state.pokerIdSecureFromParams }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="skills-item">
+          <div class="skills-item-meter">
+            <span
+                style="opacity: 1;"
+                [ngStyle]="{'width': ((state.finishedTicketIds.length / state.tickets.length) * 100) + '%'}"
+                class="skills-item-meter-active skills-animate"
+            ></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @if (state.owner && accountService.getCurrentUser().idSecure==state.owner.idSecure) {
+      <add-ticket [state]="state"></add-ticket>
+    }
+
+    <app-online-voters [state]="state"></app-online-voters>
+
+    @for (ticket of state.tickets; track ticket.id) {
+      <div
+          class="row"
+          style="margin: 0;"
+      >
+        <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <app-ticket-header [ticket]="ticket" [state]="state"></app-ticket-header>
+        </div>
+
+        <app-voter-list [ticket]="ticket" [state]="state" style="width: 100%"></app-voter-list>
+
+        <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          @if (state.activeTicketId==ticket.id) {
+            <app-voter-table
+                [ticket]="ticket"
+                [state]="state"
+            ></app-voter-table>
+          }
+        </div>
+      </div>
+    }
+  }
+}

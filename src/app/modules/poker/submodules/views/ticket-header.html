@@ -1,0 +1,69 @@
+<div class="ui-block">
+  <div class="ui-block-title">
+    <div>
+      @if (isAdmin() && state.activeTicketId==0 && state.openedTicketId==0) {
+        <button
+            style="float: right; margin-right: 5px; margin-left: 5px;"
+            class="btn btn-primary"
+            (click)="startTicket(ticket.id)" type="button"
+        >Start
+        </button>
+      }
+      @if (isAdmin() && state.activeTicketId==0 && state.openedTicketId==0) {
+        <button
+            style="float: right; margin-right: 5px; margin-left: 5px;"
+            class="btn btn-primary"
+            (click)="deleteTicket(ticket.id)" type="button"
+        >Delete
+        </button>
+      }
+      @if (isAdmin() && state.activeTicketId==ticket.id) {
+        <button
+            style="float: right; margin-right: 5px; margin-left: 5px;"
+            class="btn btn-primary"
+            (click)="endTicket()"
+            type="button"
+        >End
+        </button>
+      }
+      @if (isAdmin() && state.activeTicketId==0 && state.openedTicketId==ticket.id) {
+        <button
+            style="float: right; margin-right: 5px; margin-left: 5px;"
+            class="btn btn-primary"
+            (click)="closeTicket()"
+            type="button"
+        >Close
+        </button>
+      }
+      @if (isAdmin() && state.openedTicketId!=ticket.id && getVoteCount(ticket.id)!="waiting") {
+        <button
+            style="float: right; margin-right: 5px; margin-left: 5px;"
+            class="btn btn-primary"
+            (click)="openTicket(ticket.id)"
+            type="button"
+        >Open
+        </button>
+      }
+      <h2 class="title">{{ ticket.name }}</h2>
+      <br/>
+      <div class="font-weight-bolder" style="font-size: 20px">
+        Votes:
+        <button class="btn btn-sm bg-blue" style="font-size: 16px; margin-left: 5px;margin-right: 20px;">
+          {{ getVoteCount(ticket.id) }}
+        </button>
+        AVG:
+        <button class="btn btn-sm bg-blue" style="font-size: 16px; margin-left: 5px;margin-right: 20px;">
+          {{ getVoteAvg(ticket.id) }}
+        </button>
+        Min:
+        <button class="btn btn-sm bg-blue" style="font-size: 16px; margin-left: 5px;margin-right: 20px;">
+          {{ getVoteMin(ticket.id) }}
+        </button>
+        Max:
+        <button class="btn btn-sm bg-blue" style="font-size: 16px; margin-left: 5px;margin-right: 20px;">
+          {{ getVoteMax(ticket.id) }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
