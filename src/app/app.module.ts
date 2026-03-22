@@ -5,9 +5,8 @@ import {RouterModule}            from '@angular/router';
 import {
     FormsModule,
     ReactiveFormsModule
-}                                from '@angular/forms';
-import {AuthModule}              from 'angular-auth-oidc-client';
-import {authConfig}              from './auth-config';
+}                         from '@angular/forms';
+import {AuthConfigModule} from "./auth-config.module";
 
 @NgModule(
   {
@@ -18,9 +17,8 @@ import {authConfig}              from './auth-config';
           FormsModule,
           ReactiveFormsModule,
           RouterModule.forRoot([]),
-          AuthModule.forRoot(authConfig),
+          AuthConfigModule,
       ],
-      providers:    [],
       bootstrap:    [],
   }
 )

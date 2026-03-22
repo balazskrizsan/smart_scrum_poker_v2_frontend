@@ -1,6 +1,12 @@
 import {Routes} from '@angular/router';
+import {AuthGuard} from './guards/auth.guard';
+import {AuthCallbackComponent} from './components/auth-callback/auth-callback.component';
 
 export const routes: Routes = [
+    {
+        path:     'auth-callback',
+        component: AuthCallbackComponent
+    },
     {
         path:     '',
         children: [
@@ -13,6 +19,7 @@ export const routes: Routes = [
     },
     {
         path:     'poker',
+        canActivate: [AuthGuard],
         children: [
             {
                 path:          '',

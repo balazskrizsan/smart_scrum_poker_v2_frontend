@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, filter } from 'rxjs/operators';
+import { LocalStorageService } from './local-storage-service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,12 @@ import { map, switchMap, filter } from 'rxjs/operators';
 export class AuthService {
   constructor(
     private oidcSecurityService: OidcSecurityService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
 
   login(): void {
+    this.localStorageService.set('redirectUrl', window.location.pathname);
     this.oidcSecurityService.authorize();
   }
 

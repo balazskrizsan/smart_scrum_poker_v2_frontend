@@ -1,5 +1,6 @@
 import {bootstrapApplication} from "@angular/platform-browser";
 import {provideRouter}        from "@angular/router";
+import {importProvidersFrom}  from "@angular/core";
 import {routes}               from "./app/routing";
 import {provideAnimations}    from "@angular/platform-browser/animations";
 import {AppComponent}         from "./app/app.component";
@@ -11,8 +12,6 @@ import {LocalStorageService}  from "./app/services/local-storage-service";
 import {FlashMessageState}    from "./app/modules/flash-message/states/flash-message-state";
 import {FlashMessageService}  from "./app/modules/flash-message/services/flash-message-service";
 import {AuthService}          from "./app/services/auth.service";
-import {AuthModule}           from 'angular-auth-oidc-client';
-import {authConfig}           from './app/auth-config';
 import {Forms}                from "./app/modules/poker/forms";
 import {PokerStateStore}      from "./app/modules/poker/poker-state-store.service";
 
@@ -52,13 +51,14 @@ import {CompanyRepository} from "./app/modules/poker/repositories/company-reposi
 import {NewTicketForm}             from "./app/modules/poker/submodules/forms";
 import {TicketOpenListenerFactory} from "./app/modules/poker/factories/ticket-open-listener-factory";
 import {TicketOpenService}         from "./app/modules/poker/service/ticket-open-service";
+import {AuthConfigModule}          from "./app/auth-config.module";
 
 bootstrapApplication(AppComponent, {
     providers: [
         provideRouter(routes),
         provideAnimations(),
         provideHttpClient(),
-        ...AuthModule.forRoot(authConfig).providers,
+        importProvidersFrom(AuthConfigModule),
         RxStompService,
         AccountService,
         HttpService,

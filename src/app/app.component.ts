@@ -77,6 +77,8 @@ export class AppComponent implements OnInit
     public ngOnInit(): void
     {
         this.excludedElement = this.el.nativeElement.querySelector('.header-menu');
+
+        this.authService.checkAuth().subscribe();
     }
 
     openMobileMenu()
