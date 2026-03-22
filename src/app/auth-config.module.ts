@@ -19,6 +19,7 @@ import {AuthStorageService} from "./services/auth-storage.service";
                 responseType:          'code',
                 silentRenew:           true,
                 useRefreshToken:       true,
+                tokenRefreshInSeconds: 300,
                 logLevel:              LogLevel.Debug,
             }
         }),
