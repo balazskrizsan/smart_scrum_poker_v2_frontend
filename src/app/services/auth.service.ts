@@ -21,7 +21,9 @@ export class AuthService {
   }
 
   logout(): void {
-    this.oidcSecurityService.logoff();
+    this.oidcSecurityService.logoff().subscribe(() => {
+      this.router.navigate(['/']);
+    });
   }
 
   isAuthenticated(): Observable<boolean> {
@@ -50,8 +52,6 @@ export class AuthService {
   }
 
   getUserName(): Observable<string> {
-    return this.getUserInfo().pipe(
-      map(userData => userData?.preferred_username || userData?.email || 'Unknown')
-    );
+    return this.getUserInfo().pipe(map(info => info?.userData?.name || 'N/A'));
   }
 }
