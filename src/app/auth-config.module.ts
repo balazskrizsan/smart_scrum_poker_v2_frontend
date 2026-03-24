@@ -15,7 +15,7 @@ import {AuthStorageService} from "./services/auth-storage.service";
                 redirectUrl:           window.location.origin + '/auth-callback',
                 postLogoutRedirectUri: window.location.origin,
                 silentRenewUrl:        `${window.location.origin}/silent-renew.html`,
-                scope:                 'openid profile offline_access',
+                scope:                 'openid profile nickname',
                 responseType:          'code',
                 silentRenew:           true,
                 useRefreshToken:       true,

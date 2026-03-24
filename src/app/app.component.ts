@@ -41,7 +41,7 @@ export class AppComponent implements OnInit
     protected isMenuOpen = false;
     private excludedElement = null;
     public isAuthenticated$: Observable<boolean>;
-    public userName$: Observable<string>;
+    public userNickname$: Observable<string>;
     public isNotAuthenticated$: Observable<boolean>;
 
     public constructor(
@@ -55,7 +55,7 @@ export class AppComponent implements OnInit
         this.rxStompService.get();
         this.accountEvents = this.accountService.getAccountEvents();
         this.isAuthenticated$ = this.authService.isAuthenticated();
-        this.userName$ = this.authService.getUserName();
+        this.userNickname$ = this.authService.getUserNickname();
         this.isNotAuthenticated$ = this.isAuthenticated$.pipe(map(authenticated => !authenticated));
         
         this.accountEvents.subscribe(event =>

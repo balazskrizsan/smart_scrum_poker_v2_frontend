@@ -51,7 +51,7 @@ export class AuthService {
     );
   }
 
-  getUserName(): Observable<string> {
-    return this.getUserInfo().pipe(map(info => info?.userData?.name || 'N/A'));
+  getUserNickname(): Observable<string> {
+    return this.getUserInfo().pipe(map(info => info?.userData?.nickname || info?.userData?.name || 'N/A'));
   }
 }
