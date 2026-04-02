@@ -15,11 +15,11 @@ import {AuthStorageService} from "./services/auth-storage.service";
                 redirectUrl:           window.location.origin + '/auth-callback',
                 postLogoutRedirectUri: window.location.origin,
                 silentRenewUrl:        `${window.location.origin}/silent-renew.html`,
-                scope:                 'openid profile nickname',
+                scope:                 'openid offline_access profile nickname poker.start',
                 responseType:          'code',
                 silentRenew:           true,
                 useRefreshToken:       true,
-                tokenRefreshInSeconds: 300,
+                tokenRefreshInSeconds: 30,
                 logLevel:              LogLevel.Debug,
             }
         }),

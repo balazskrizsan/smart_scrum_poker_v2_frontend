@@ -9,21 +9,33 @@ import {IStdApiResponse}       from "../../../interfaces/i-std-api-response";
 import {filter}                from "rxjs";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
 import {AccountService}        from "../../account/service/account-service";
-import {IInsecureUser}         from "../../account/interfaces/i-insecure-user";
 import {environment}           from '../../../../environments/environment';
+import {AuthService}           from "../../../services/auth.service";
 
 @Injectable()
 export class RxStompService
 {
     private rxStomp: RxStomp = null;
+    private headers: any = {};
 
-    constructor(private accountService: AccountService)
+    constructor(private authService: AuthService)
     {
+        this.authService.getAccessToken().subscribe(token =>
+        {
+            if (token)
+            {
+                this.headers["Authorization"] = "Bearer " + token;
+                this.rxStomp.configure({
+                    brokerURL:      environment.backend.wss_api.host,
+                    connectHeaders: this.headers,
+                });
+            }
+        });
     }
 
     public get(): RxStomp
     {
-        if (null != this.rxStomp)
+        if (null != this.rxStomp && this.rxStomp.connected())
         {
             return this.rxStomp;
         }
@@ -31,26 +43,11 @@ export class RxStompService
         this.rxStomp = new RxStomp();
         this.rxStomp.configure({
             brokerURL:      environment.backend.wss_api.host,
-            connectHeaders: this.getConnectHeaders()
+            connectHeaders: this.headers,
         });
         this.rxStomp.activate();
-    }
 
-    private getConnectHeaders(): {}
-    {
-        let user: IInsecureUser;
-        try
-        {
-            user = this.accountService.getCurrentUser()
-        }
-        catch (e)
-        {
-            return {}
-        }
-
-        return {
-            "insecureUserIdSecure": user.idSecure
-        };
+        return this.rxStomp;
     }
 
     public getSubscription<T>(destination: string, socketDestinationFilter: SocketDestination): ISubscriptionListener<T>
