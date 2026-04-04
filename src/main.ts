@@ -50,15 +50,15 @@ import {CompanyRepository} from "./app/modules/poker/repositories/company-reposi
 // Poker forms
 import {NewTicketForm}             from "./app/modules/poker/submodules/forms";
 import {TicketOpenListenerFactory} from "./app/modules/poker/factories/ticket-open-listener-factory";
-import {TicketOpenService}         from "./app/modules/poker/service/ticket-open-service";
-import {AuthConfigModule}          from "./app/auth-config.module";
+import {TicketOpenService} from "./app/modules/poker/service/ticket-open-service";
+import {OidcConfigModule}  from "./app/oidc-config.module";
 
 bootstrapApplication(AppComponent, {
     providers: [
         provideRouter(routes),
         provideAnimations(),
         provideHttpClient(),
-        importProvidersFrom(AuthConfigModule),
+        importProvidersFrom(OidcConfigModule),
         RxStompService,
         AccountService,
         HttpService,

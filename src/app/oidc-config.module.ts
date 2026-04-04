@@ -1,10 +1,10 @@
 import {
     AbstractSecurityStorage,
-    AuthModule,
-    LogLevel
+    AuthModule
 }                           from 'angular-auth-oidc-client';
 import {NgModule}           from "@angular/core";
 import {AuthStorageService} from "./services/auth-storage.service";
+import {environment}        from "../environments/environment";
 
 @NgModule({
     imports:   [
@@ -19,8 +19,8 @@ import {AuthStorageService} from "./services/auth-storage.service";
                 responseType:          'code',
                 silentRenew:           true,
                 useRefreshToken:       true,
-                tokenRefreshInSeconds: 30,
-                logLevel:              LogLevel.Debug,
+                tokenRefreshInSeconds: environment.oidc.tokenRefreshInSeconds,
+                logLevel:              environment.oidc.logLevel,
             }
         }),
     ],
@@ -29,6 +29,6 @@ import {AuthStorageService} from "./services/auth-storage.service";
     ],
     exports:   [AuthModule],
 })
-export class AuthConfigModule
+export class OidcConfigModule
 {
 }
