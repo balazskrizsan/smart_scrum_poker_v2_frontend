@@ -36,7 +36,6 @@ export class CreateActionComponent implements OnDestroy, OnInit
       protected forms: Forms,
       private rxStompService: RxStompService,
       private routerNavigateService: RouterNavigateService,
-      private accountService: AccountService,
     )
     {
         this.form = this.forms.createCruForm();
@@ -51,7 +50,7 @@ export class CreateActionComponent implements OnDestroy, OnInit
 
     ngOnInit(): void
     {
-        this.accountService.getCurrentUserOrRedirect();
+        // @todo: redirect if not logged in
         this.addTicketNameField();
     }
 
@@ -96,7 +95,6 @@ export class CreateActionComponent implements OnDestroy, OnInit
               {
                   sprintTitle:           this.forms.getField("name").getRawValue(),
                   ticketNames:           this.form.getRawValue().ticketNames.flatMap(tn => tn.name),
-                  starterInsecureUserId: this.accountService.getCurrentUser().idSecure,
               }
             );
         }
