@@ -3,7 +3,7 @@ import {LogLevel} from "angular-auth-oidc-client";
 export const environment = {
   production: false,
   oidc: {
-    tokenRefreshInSeconds: 1500, // 25min
+    tokenRefreshInSeconds: 60, // 25min
     logLevel: LogLevel.Debug
   },
   frontend: {

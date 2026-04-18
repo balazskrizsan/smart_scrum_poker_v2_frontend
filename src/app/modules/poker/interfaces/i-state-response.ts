@@ -1,15 +1,15 @@
 import {IPoker} from "./i-poker";
-import {ITicket} from "./i-ticket";
-import {IInsecureUser} from "../../account/interfaces/i-insecure-user";
+import {ITicket}            from "./i-ticket";
+import {IUserProfile}       from "../../account/interfaces/i-user-profile";
 import {IVotesWithVoteStat} from "./i-votes-with-vote-stat";
 
 export interface IStateResponse
 {
     poker: IPoker;
     tickets: Array<ITicket>;
-    inGameInsecureUsers: Array<IInsecureUser>;
-    inGameInsecureUsersWithSession: Array<IInsecureUser>;
-    votes: Record<number, Record<string, IInsecureUser>>;
+    inGameInsecureUsers: Array<IUserProfile>;
+    idsUsersWithSession: Array<IUserProfile>;
+    votes: Record<number, Record<string, IUserProfile>>;
     votesWithVoteStatList: Record<number, IVotesWithVoteStat>;
-    owner: IInsecureUser;
+    owner: IUserProfile;
 }

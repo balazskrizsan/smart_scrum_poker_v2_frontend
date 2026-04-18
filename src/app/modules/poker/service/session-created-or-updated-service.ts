@@ -8,6 +8,6 @@ export class SessionCreatedOrUpdatedService
 {
     public setSessionCreatedOrUpdatedService(body: IStdApiResponse<ISessionResponse>, state: IPokerState)
     {
-        state.inGameInsecureUsersWithSessions[body.data.insecureUser.idSecure] = true;
+        state.idsUsersWithSession[body.data.insecureUser.userId] = true;
     }
 }

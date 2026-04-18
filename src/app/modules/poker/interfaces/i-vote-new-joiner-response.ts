@@ -1,6 +1,7 @@
-import {IInsecureUser} from "../../account/interfaces/i-insecure-user";
+import {IUserProfile} from "../../account/interfaces/i-user-profile";
 
 export interface IVoteNewJoinerResponse
 {
-    insecureUser: IInsecureUser;
+    // @todo: rename
+    idsUser: IUserProfile;
 }

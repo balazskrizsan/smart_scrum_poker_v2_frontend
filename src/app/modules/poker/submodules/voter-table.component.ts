@@ -3,9 +3,9 @@ import {
     Input,
 }                          from "@angular/core";
 import {SocketDestination} from "../../commons/enums/socket-destination";
-import {RxStompService}    from "../../commons/services/rx-stomp-service";
-import {AccountService}    from "../../account/service/account-service";
-import {IPokerState}       from "../interfaces/i-poker-state";
+import {RxStompService}      from "../../commons/services/rx-stomp-service";
+import {AccountEventService} from "../../account/service/account-event.service";
+import {IPokerState}         from "../interfaces/i-poker-state";
 import {ITicket}           from "../interfaces/i-ticket";
 import {
     CommonModule,
@@ -44,7 +44,7 @@ export class VoterTableComponent
 
     constructor(
       private rxStompService: RxStompService,
-      private accountService: AccountService,
+      private accountService: AccountEventService,
     )
     {
     }
@@ -79,7 +79,7 @@ export class VoterTableComponent
             .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
             .replace("{ticketId}", this.ticket.id.toString(10)),
           {
-              userIdSecure:    this.accountService.getCurrentUser().idSecure,
+              userIdSecure:    this.accountService.getCurrentUser().userId,
               pokerIdSecure:   this.state.pokerIdSecureFromParams,
               ticketId:        this.ticket.id,
               voteUncertainty: this.votes.uncertainty,

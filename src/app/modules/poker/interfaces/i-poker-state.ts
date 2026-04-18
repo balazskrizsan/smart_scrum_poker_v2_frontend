@@ -1,5 +1,5 @@
-import {IInsecureUser} from "../../account/interfaces/i-insecure-user";
-import {IPoker}        from "./i-poker";
+import {IUserProfile} from "../../account/interfaces/i-user-profile";
+import {IPoker}       from "./i-poker";
 import {IVote}     from "./i-vote";
 import {IVoteStat} from "./i-vote-stat";
 import {ITicket}       from "./i-ticket";
@@ -9,13 +9,13 @@ export interface IPokerState
     tickets: Array<ITicket>;
     pokerIdSecureFromParams: string;
     poker: IPoker;
-    inGameInsecureUsers: Array<IInsecureUser>;
-    inGameInsecureUsersWithSessions: Record<string, boolean>;
-    owner: IInsecureUser;
+    inPokerUserProfiles: Array<IUserProfile>;
+    idsUsersWithSession: Record<string, boolean>;
+    owner: IUserProfile;
     userVoteStats: Record<number, IVoteStat>;
     activeTicketId: number;
     openedTicketId: number;
-    votes: Record<number, Record<string, IInsecureUser>>;
+    votes: Record<number, Record<string, IUserProfile>>;
     userVotes: Record<number, Record<string, IVote>>;
     initDone: boolean;
     finishedTicketIds: Array<number>;

@@ -6,9 +6,9 @@ import {
 import {Forms}                 from '../forms';
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
-import {ActivatedRoute}        from "@angular/router";
-import {AccountService}        from "../../account/service/account-service";
-import {PokerStateStore}       from "../poker-state-store.service";
+import {ActivatedRoute}      from "@angular/router";
+import {AccountEventService} from "../../account/service/account-event.service";
+import {PokerStateStore}     from "../poker-state-store.service";
 import {SubscriptionService}   from "../service/subscription-service";
 import {environment}           from '../../../../environments/environment';
 import {CommonModule}          from "@angular/common";
@@ -43,7 +43,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
       private pokerStateStore: PokerStateStore,
       private rxStompService: RxStompService,
       private activatedRoute: ActivatedRoute,
-      public accountService: AccountService,
+      public accountService: AccountEventService,
       private subscriptionService: SubscriptionService,
       private flashMessageService: FlashMessageService,
     )
@@ -76,13 +76,12 @@ export class DisplayActionComponent implements OnInit, OnDestroy
 
     async ngOnInit(): Promise<void>
     {
-        this.accountService.getCurrentUserOrRedirect();
+        // @todo: redirect if not logged in
 
         const currentState = this.pokerStateStore.state;
         this.rxStompService.publish(
-          SocketDestination.SEND_POKER_ROOM_STATE
-            .replace("{pokerIdSecure}", currentState.pokerIdSecureFromParams)
-            .replace("{insecureUserId}", this.accountService.getCurrentUser().idSecure),
+          SocketDestination.SEND_POKER_STATE
+            .replace("{pokerPublicId}", currentState.pokerIdSecureFromParams),
           ''
         );
     }

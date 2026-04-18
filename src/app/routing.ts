@@ -43,24 +43,4 @@ export const routes: Routes = [
             }
         ]
     },
-    {
-        path:     'account',
-        children: [
-            {
-                path:          '',
-                loadComponent: () => import('./modules/account/actions/insecure-create-action.component')
-                  .then(m => m.InsecureCreateActionComponent)
-            },
-            {
-                path:          'login',
-                loadComponent: () => import('./modules/account/actions/insecure-create-action.component')
-                  .then(m => m.InsecureCreateActionComponent)
-            },
-            {
-                path:          'logout',
-                loadComponent: () => import('./modules/account/actions/logout.component')
-                  .then(m => m.LogoutComponent)
-            }
-        ]
-    }
 ];

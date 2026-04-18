@@ -6,7 +6,7 @@ import {GameStateService}      from "../service/game-state-service";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 
 @Injectable()
-export class GameStateListenerFactory
+export class StateListenerFactory
 {
     public constructor(
       private rxStompService: RxStompService,
@@ -19,7 +19,7 @@ export class GameStateListenerFactory
     {
         const listener = this.rxStompService.getSubscription<IStateResponse>(
           '/user/queue/reply',
-          SocketDestination.RECEIVE_POKER_ROOM_STATE
+          SocketDestination.RECEIVE_POKER_STATE
         );
 
         listener.$subscription = listener.observable.subscribe(

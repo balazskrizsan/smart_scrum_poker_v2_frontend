@@ -14,7 +14,7 @@ import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {IStartResponse}        from "../interfaces/i-start-response";
 import {RouterNavigateService} from "../service/router-navigate-service";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
-import {AccountService}        from "../../account/service/account-service";
+import {AccountEventService}   from "../../account/service/account-event.service";
 import {CommonModule}          from "@angular/common";
 
 @Component(

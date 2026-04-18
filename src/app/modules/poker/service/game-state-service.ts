@@ -14,7 +14,7 @@ export class GameStateService
     {
         const votes: { [key: string]: any } = {};
         const userVoteStats: { [key: string]: any } = {};
-        const inGameInsecureUsersWithSessions: { [key: string]: boolean } = {};
+        const idsUsersWithSession: { [key: string]: boolean } = {};
 
         Object.entries(body.data.votesWithVoteStatList).forEach(([key, value]) =>
         {
@@ -22,9 +22,9 @@ export class GameStateService
             userVoteStats[key] = value.voteStat;
         });
 
-        body.data.inGameInsecureUsersWithSession.forEach(iu =>
+        body.data.idsUsersWithSession.forEach(iu =>
         {
-            inGameInsecureUsersWithSessions[iu.idSecure] = true;
+            idsUsersWithSession[iu.userId] = true;
         });
 
         let possibleStartedTickets = body.data.tickets.filter(t => t.isActive);
@@ -42,17 +42,17 @@ export class GameStateService
         }
 
         this.pokerStateStore.updateState({
-            poker: body.data.poker,
-            tickets: body.data.tickets,
-            inGameInsecureUsers: body.data.inGameInsecureUsers,
-            votes: votes,
-            userVoteStats: userVoteStats,
-            finishedTicketIds: Object.keys(body.data.votes).map(k => Number(k)),
-            owner: body.data.owner,
-            inGameInsecureUsersWithSessions: inGameInsecureUsersWithSessions,
-            activeTicketId: activeTicketId,
-            openedTicketId: openedTicketId,
-            initDone: true
+            poker:               body.data.poker,
+            tickets:             body.data.tickets,
+            inPokerUserProfiles: body.data.inGameInsecureUsers,
+            votes:               votes,
+            userVoteStats:       userVoteStats,
+            finishedTicketIds:   Object.keys(body.data.votes).map(k => Number(k)),
+            owner:               body.data.owner,
+            idsUsersWithSession: idsUsersWithSession,
+            activeTicketId:      activeTicketId,
+            openedTicketId:      openedTicketId,
+            initDone:            true
         });
     }
 }

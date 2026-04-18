@@ -1,26 +1,26 @@
 import {IPokerState}     from "./interfaces/i-poker-state";
 import {Injectable}      from "@angular/core";
 import {BehaviorSubject} from "rxjs";
-import {IInsecureUser}   from "../account/interfaces/i-insecure-user";
+import {IUserProfile}    from "../account/interfaces/i-user-profile";
 import _                 from 'lodash';
 
 @Injectable()
 export class PokerStateStore
 {
     private _state: IPokerState = {
-        tickets:                         [],
-        inGameInsecureUsers:             [],
-        inGameInsecureUsersWithSessions: {},
-        owner:                           null,
-        userVoteStats:                   {},
-        pokerIdSecureFromParams:         null,
-        poker:                           null,
-        activeTicketId:                  0,
-        openedTicketId:                  0,
-        votes:                           {},
-        userVotes:                       {},
-        initDone:                        false,
-        finishedTicketIds:               [],
+        tickets:                 [],
+        inPokerUserProfiles:     [],
+        idsUsersWithSession:     {},
+        owner:                   null,
+        userVoteStats:           {},
+        pokerIdSecureFromParams: null,
+        poker:                   null,
+        activeTicketId:          0,
+        openedTicketId:          0,
+        votes:                   {},
+        userVotes:               {},
+        initDone:                false,
+        finishedTicketIds:       [],
     };
 
     private stateSubject = new BehaviorSubject<IPokerState>(this._state);
@@ -51,7 +51,7 @@ export class PokerStateStore
         return this._state.openedTicketId;
     }
 
-    public addVote(ticketId: number, userIdSecure: string, user: IInsecureUser): void
+    public addVote(ticketId: number, userIdSecure: string, user: IUserProfile): void
     {
         const updatedVotes = {...this._state.votes};
         if (!updatedVotes[ticketId])
@@ -90,26 +90,26 @@ export class PokerStateStore
 
     public removeInGameUser(userIdSecure: string): void
     {
-        const updatedInGameUsersWithSessions = {...this._state.inGameInsecureUsersWithSessions};
+        const updatedInGameUsersWithSessions = {...this._state.idsUsersWithSession};
         updatedInGameUsersWithSessions[userIdSecure] = undefined;
-        this.updateState({inGameInsecureUsersWithSessions: updatedInGameUsersWithSessions});
+        this.updateState({idsUsersWithSession: updatedInGameUsersWithSessions});
     }
 
-    public addInGameUser(user: IInsecureUser): void
+    public addInPokerUserProfile(user: IUserProfile): void
     {
-        const updatedInGameUsers = [...this._state.inGameInsecureUsers];
+        const updatedInGameUsers = [...this._state.inPokerUserProfiles];
         if (!_.find(updatedInGameUsers, user))
         {
             updatedInGameUsers.push(user);
         }
-        this.updateState({inGameInsecureUsers: updatedInGameUsers});
+        this.updateState({inPokerUserProfiles: updatedInGameUsers});
     }
 
-    public setInGameUserSession(userIdSecure: string, hasSession: boolean): void
+    public setIdsUserSession(userId: string, hasSession: boolean): void
     {
-        const updatedInGameUsersWithSessions = {...this._state.inGameInsecureUsersWithSessions};
-        updatedInGameUsersWithSessions[userIdSecure] = hasSession;
-        this.updateState({inGameInsecureUsersWithSessions: updatedInGameUsersWithSessions});
+        const updatedInGameUsersWithSessions = {...this._state.idsUsersWithSession};
+        updatedInGameUsersWithSessions[userId] = hasSession;
+        this.updateState({idsUsersWithSession: updatedInGameUsersWithSessions});
     }
 
     public addTicket(ticket: any): void

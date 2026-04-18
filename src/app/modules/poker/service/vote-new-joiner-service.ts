@@ -13,8 +13,8 @@ export class VoteNewJoinerService
 
     public setVoteNewJoiner(body: IStdApiResponse<IVoteNewJoinerResponse>)
     {
-        const insecureUser = body.data.insecureUser;
-        this.pokerStateStore.addInGameUser(insecureUser);
-        this.pokerStateStore.setInGameUserSession(insecureUser.idSecure, true);
+        const userProfile = body.data.idsUser;
+        this.pokerStateStore.addInPokerUserProfile(userProfile);
+        this.pokerStateStore.setIdsUserSession(userProfile.userId, true);
     }
 }

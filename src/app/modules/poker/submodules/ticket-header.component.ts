@@ -1,17 +1,17 @@
 import {
     Component,
     Input
-}                          from "@angular/core";
-import {IPokerState}       from "../interfaces/i-poker-state";
-import {AccountService}    from "../../account/service/account-service";
-import {SocketDestination} from "../../commons/enums/socket-destination";
-import {RxStompService}    from "../../commons/services/rx-stomp-service";
-import {ITicket}           from "../interfaces/i-ticket";
-import {PokerStateStore}   from "../poker-state-store.service";
+}                            from "@angular/core";
+import {IPokerState}         from "../interfaces/i-poker-state";
+import {AccountEventService} from "../../account/service/account-event.service";
+import {SocketDestination}   from "../../commons/enums/socket-destination";
+import {RxStompService}      from "../../commons/services/rx-stomp-service";
+import {ITicket}             from "../interfaces/i-ticket";
+import {PokerStateStore}     from "../poker-state-store.service";
 
 @Component({
     selector:    'app-ticket-header',
-    standalone: true,
+    standalone:  true,
     templateUrl: './views/ticket-header.html',
     providers:   [],
 })
@@ -22,7 +22,7 @@ export class TicketHeaderComponent
 
     constructor(
       private rxStompService: RxStompService,
-      private accountService: AccountService,
+      private accountService: AccountEventService,
       private pokerStateStore: PokerStateStore
     )
     {
@@ -30,7 +30,7 @@ export class TicketHeaderComponent
 
     protected isAdmin(): boolean
     {
-        return null != this.state.owner && this.accountService.getCurrentUser().idSecure == this.state.owner.idSecure;
+        return null != this.state.owner && this.accountService.getCurrentUser().userId == this.state.owner.userId;
     }
 
     protected startTicket(ticketId: number)

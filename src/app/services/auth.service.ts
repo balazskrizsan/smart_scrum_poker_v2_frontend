@@ -26,21 +26,11 @@ export class AuthService {
     });
   }
 
-  isAuthenticated(): Observable<boolean> {
-    return this.oidcSecurityService.isAuthenticated$.pipe(
-      map(result => result.isAuthenticated)
-    );
-  }
-
-  getUserInfo(): Observable<any> {
-    return this.oidcSecurityService.userData$;
-  }
-
-  getAccessToken(): Observable<string | undefined> {
+  getAccessToken$(): Observable<string | undefined> {
     return this.oidcSecurityService.getAccessToken();
   }
 
-  checkAuth(): Observable<boolean> {
+  checkAuth$(): Observable<boolean> {
     return this.oidcSecurityService.checkAuth().pipe(
       map(({ isAuthenticated }) => {
         if (!isAuthenticated) {
@@ -51,7 +41,9 @@ export class AuthService {
     );
   }
 
-  getUserNickname(): Observable<string> {
-    return this.getUserInfo().pipe(map(info => info?.userData?.nickname || info?.userData?.name || 'N/A'));
+  forceRefreshToken(): Observable<boolean> {
+    return this.oidcSecurityService.forceRefreshSession().pipe(
+      map(result => result.isAuthenticated)
+    );
   }
 }

@@ -10,8 +10,8 @@ import {
 } from "@angular/forms";
 import {NewTicketForm} from "./forms";
 import {SocketDestination} from "../../commons/enums/socket-destination";
-import {RxStompService}    from "../../commons/services/rx-stomp-service";
-import {AccountService}    from "../../account/service/account-service";
+import {RxStompService}      from "../../commons/services/rx-stomp-service";
+import {AccountEventService} from "../../account/service/account-event.service";
 
 @Component({
     selector:    'add-ticket',
@@ -29,7 +29,7 @@ export class AddTicketComponent
     public constructor(
       protected forms: NewTicketForm,
       protected rxStompService: RxStompService,
-      protected accountService: AccountService,
+      protected accountService: AccountEventService,
     )
     {
         this.form = this.forms.createCruForm();
@@ -46,7 +46,7 @@ export class AddTicketComponent
         this.rxStompService.publish(
           SocketDestination.SEND__POKER__NEW_TICKET_CREATE,
           {
-              userIdSecure:  this.accountService.getCurrentUser().idSecure,
+              userIdSecure:  this.accountService.getCurrentUser().userId,
               pokerIdSecure: this.state.poker.idSecure,
               ticketName:    this.forms.getField("ticketName").getRawValue(),
           }

@@ -9,6 +9,7 @@ import {
     take
 }                    from 'rxjs/operators';
 import {AuthService} from '../services/auth.service';
+import {IdsUserService} from "../services/ids-user-service";
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,7 @@ import {AuthService} from '../services/auth.service';
 export class AuthGuard implements CanActivate
 {
     constructor(
-      private authService: AuthService,
+      private idsUserService: IdsUserService,
       private router: Router
     )
     {
@@ -24,12 +25,13 @@ export class AuthGuard implements CanActivate
 
     canActivate(): Observable<boolean>
     {
-        return this.authService.isAuthenticated().pipe(
+        return this.idsUserService.isAuthenticated$().pipe(
           take(1),
           map(isAuthenticated =>
           {
               if (!isAuthenticated)
               {
+                  alert("must be logged in")
                   this.router.navigate(['/']);
 
                   return false;

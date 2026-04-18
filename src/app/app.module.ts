@@ -7,6 +7,7 @@ import {
     ReactiveFormsModule
 }                         from '@angular/forms';
 import {OidcConfigModule} from "./oidc-config.module";
+import {IdsUserService} from "./services/ids-user-service";
 
 @NgModule(
   {
@@ -24,4 +25,7 @@ import {OidcConfigModule} from "./oidc-config.module";
 )
 export class AppModule
 {
+    constructor(private idsUserService: IdsUserService) {
+        this.idsUserService.initializeAuthState();
+    }
 }

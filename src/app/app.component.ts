@@ -6,17 +6,15 @@ import {
     OnInit
 }                              from '@angular/core';
 import {UrlService}            from './modules/commons/services/url-service';
-import {RxStompService}        from "./modules/commons/services/rx-stomp-service";
-import {AccountService}        from "./modules/account/service/account-service";
-import {IInsecureUser}         from "./modules/account/interfaces/i-insecure-user";
+import {IUserProfile}          from "./modules/account/interfaces/i-user-profile";
 import {EventEnum}             from "./modules/account/enums/event-enum";
 import {RouterModule}          from '@angular/router';
 import {CommonModule}          from "@angular/common";
 import {FlashMessageComponent} from "./modules/flash-message/flash-message.component";
 import {AuthService}           from "./services/auth.service";
-import {OidcSecurityService}   from 'angular-auth-oidc-client';
 import {Observable}            from 'rxjs';
 import {map}                   from 'rxjs/operators';
+import {IdsUserService}        from "./services/ids-user-service";
 
 export interface IIdentityServerUser
 {
@@ -36,7 +34,7 @@ export interface IIdentityServerUser
 export class AppComponent implements OnInit
 {
     public urlService = UrlService;
-    public currentUser: IInsecureUser | null = null;
+    public currentUser: IUserProfile | null = null;
     public accountEvents: EventEmitter<EventEnum>;
     protected isMenuOpen = false;
     private excludedElement = null;
@@ -45,40 +43,21 @@ export class AppComponent implements OnInit
     public isNotAuthenticated$: Observable<boolean>;
 
     public constructor(
-      private rxStompService: RxStompService,
-      private accountService: AccountService,
       private el: ElementRef,
       private authService: AuthService,
-      private oidcSecurityService: OidcSecurityService
+      private idsUserService: IdsUserService
     )
     {
-        this.rxStompService.get();
-        this.accountEvents = this.accountService.getAccountEvents();
-        this.isAuthenticated$ = this.authService.isAuthenticated();
-        this.userNickname$ = this.authService.getUserNickname();
+        this.isAuthenticated$ = this.idsUserService.isAuthenticated$();
+        this.userNickname$ = this.idsUserService.getUserNickname$();
         this.isNotAuthenticated$ = this.isAuthenticated$.pipe(map(authenticated => !authenticated));
-        
-        this.accountEvents.subscribe(event =>
-        {
-            switch (event)
-            {
-                case EventEnum.USER_LOGIN:
-                    this.currentUser = this.accountService.getCurrentUser();
-                    break;
-                case EventEnum.USER_LOGOUT:
-                    this.currentUser = null;
-                    break;
-            }
-        });
-
-        this.currentUser = this.accountService.getCurrentUserOrNull();
     }
 
     public ngOnInit(): void
     {
         this.excludedElement = this.el.nativeElement.querySelector('.header-menu');
 
-        this.authService.checkAuth().subscribe();
+        this.authService.checkAuth$().subscribe();
     }
 
     openMobileMenu()

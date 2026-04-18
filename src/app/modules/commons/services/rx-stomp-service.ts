@@ -3,14 +3,15 @@ import {RxStomp}               from "@stomp/rx-stomp";
 import {SocketDestination}     from "../enums/socket-destination";
 import {
     map,
+    take,
     tap
 }                              from "rxjs/operators";
 import {IStdApiResponse}       from "../../../interfaces/i-std-api-response";
 import {filter}                from "rxjs";
 import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-listener";
-import {AccountService}        from "../../account/service/account-service";
 import {environment}           from '../../../../environments/environment';
 import {AuthService}           from "../../../services/auth.service";
+import {IdsUserService}        from "../../../services/ids-user-service";
 
 @Injectable()
 export class RxStompService
@@ -18,9 +19,62 @@ export class RxStompService
     private rxStomp: RxStomp = null;
     private headers: any = {};
 
-    constructor(private authService: AuthService)
+    constructor(
+      private authService: AuthService,
+      private idsUserService: IdsUserService,
+      )
     {
-        this.authService.getAccessToken().subscribe(token =>
+        this.initializeConnection();
+    }
+
+    private initializeConnection(): void
+    {
+        this.authService.getAccessToken$().pipe(take(1)).subscribe(token =>
+        {
+            if (!token) return;
+
+            console.log("=============== Token received:", token);
+            this.checkAuthenticationAndConnect();
+        });
+    }
+
+    private checkAuthenticationAndConnect(): void
+    {
+        this.idsUserService.isAuthenticated$().pipe(take(1)).subscribe(isAuth =>
+        {
+            console.log("=============== Authentication status:", isAuth);
+
+            if (!isAuth)
+            {
+                this.refreshTokenAndConnect();
+            } else
+            {
+                console.log("Token is valid");
+                this.setupStompConnection();
+            }
+        });
+    }
+
+    private refreshTokenAndConnect(): void
+    {
+        console.log("=============== Token expired, attempting refresh...");
+        this.authService.forceRefreshToken().pipe(take(1)).subscribe(refreshed =>
+        {
+            if (refreshed)
+            {
+                console.log("=============== Token refreshed successfully");
+                this.setupStompConnection();
+            } else
+            {
+                console.log("=============== Token refresh failed, user may need to re-login");
+                // @todo: relogin
+            }
+        });
+    }
+
+    private setupStompConnection(): void
+    {
+        this.authService.getAccessToken$().pipe(take(1)).subscribe(token =>
         {
             if (token)
             {
@@ -29,6 +83,11 @@ export class RxStompService
                     brokerURL:      environment.backend.wss_api.host,
                     connectHeaders: this.headers,
                 });
+                this.rxStomp.deactivate().then(() =>
+                {
+                    this.rxStomp.activate();
+                });
+                console.log("Reconnect done");
             }
         });
     }
@@ -41,11 +100,21 @@ export class RxStompService
         }
 
         this.rxStomp = new RxStomp();
-        this.rxStomp.configure({
-            brokerURL:      environment.backend.wss_api.host,
-            connectHeaders: this.headers,
+        
+        // Ensure we have the current token before connecting
+        this.authService.getAccessToken$().pipe(take(1)).subscribe(token =>
+        {
+            if (token)
+            {
+                this.headers["Authorization"] = "Bearer " + token;
+                this.rxStomp.configure({
+                    brokerURL:      environment.backend.wss_api.host,
+                    connectHeaders: this.headers,
+                });
+                this.rxStomp.activate();
+                console.log("Socket connected with token");
+            }
         });
-        this.rxStomp.activate();
 
         return this.rxStomp;
     }

@@ -4,9 +4,9 @@ import {
 }                              from '@angular/core';
 import {Forms}                 from '../forms';
 import {FormGroup}             from "@angular/forms";
-import {RxStompService}        from "../../commons/services/rx-stomp-service";
-import {AccountService}        from "../../account/service/account-service";
-import {SocketDestination}     from "../../commons/enums/socket-destination";
+import {RxStompService}      from "../../commons/services/rx-stomp-service";
+import {AccountEventService} from "../../account/service/account-event.service";
+import {SocketDestination}   from "../../commons/enums/socket-destination";
 import {BehaviorSubject}       from "rxjs";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 import {IMyPokersResponse}     from "../interfaces/i-my-pokers-response";
@@ -14,6 +14,7 @@ import {IPoker}                from "../interfaces/i-poker";
 import {UrlService}            from "../../commons/services/url-service";
 import {RouterModule}          from "@angular/router";
 import {CommonModule}           from "@angular/common";
+import {IdsUserService} from "../../../services/ids-user-service";
 
 @Component(
   {
@@ -35,10 +36,10 @@ export class MyPokersActionComponent implements OnDestroy
     public constructor(
       protected forms: Forms,
       private rxStompService: RxStompService,
-      private accountService: AccountService,
+      private idsUserService: IdsUserService,
     )
     {
-        let user = this.accountService.getCurrentUserOrRedirect();
+        let user = this.idsUserService.getCurrentUserProfileOrRedirect();
 
         this.myPokersListener = this.rxStompService.getSubscription<IMyPokersResponse>(
           '/user/queue/reply',
@@ -49,7 +50,7 @@ export class MyPokersActionComponent implements OnDestroy
           (body) => this.myPokersSubject.next(body.data.pokers)
         );
 
-        this.rxStompService.publish(SocketDestination.POKER__MY_TICKETS, {userIdInsecure: user.idSecure});
+        this.rxStompService.publish(SocketDestination.POKER__MY_TICKETS, {userIdInsecure: user.userId});
     }
 
     ngOnDestroy(): void

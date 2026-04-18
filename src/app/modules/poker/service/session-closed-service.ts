@@ -12,6 +12,6 @@ export class SessionClosedService
 
     public setSessionClosed(body: IStdApiResponse<ISessionResponse>)
     {
-        this.pokerStateStore.removeInGameUser(body.data.insecureUser.idSecure);
+        this.pokerStateStore.removeInGameUser(body.data.insecureUser.userId);
     }
 }

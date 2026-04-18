@@ -5,9 +5,9 @@ import {routes}               from "./app/routing";
 import {provideAnimations}    from "@angular/platform-browser/animations";
 import {AppComponent}         from "./app/app.component";
 import {provideHttpClient}    from "@angular/common/http";
-import {RxStompService}       from "./app/modules/commons/services/rx-stomp-service";
-import {AccountService}       from "./app/modules/account/service/account-service";
-import {HttpService}          from "./app/services/http-service";
+import {RxStompService}      from "./app/modules/commons/services/rx-stomp-service";
+import {AccountEventService} from "./app/modules/account/service/account-event.service";
+import {HttpService}         from "./app/services/http-service";
 import {LocalStorageService}  from "./app/services/local-storage-service";
 import {FlashMessageState}    from "./app/modules/flash-message/states/flash-message-state";
 import {FlashMessageService}  from "./app/modules/flash-message/services/flash-message-service";
@@ -31,9 +31,9 @@ import {VoteStopService}                from "./app/modules/poker/service/vote-s
 import {VoterLeavingService}            from "./app/modules/poker/service/voter-leaving-service";
 
 // Poker factories
-import {AddTicketListenerFactory}               from "./app/modules/poker/factories/add-ticket-listener-factory";
-import {GameStateListenerFactory}               from "./app/modules/poker/factories/game-state-listener-factory";
-import {PokerStartListenerFactory}              from "./app/modules/poker/factories/poker-start-listener-factory";
+import {AddTicketListenerFactory}  from "./app/modules/poker/factories/add-ticket-listener-factory";
+import {StateListenerFactory}      from "./app/modules/poker/factories/state-listener-factory.service";
+import {PokerStartListenerFactory} from "./app/modules/poker/factories/poker-start-listener-factory";
 import {PokerTicketDeleteListenerFactory}       from "./app/modules/poker/factories/poker-ticket-delete-listener-factory.service";
 import {RoundStartListenerFactory}              from "./app/modules/poker/factories/round-start-listener-factory";
 import {SessionClosedListenerFactory}           from "./app/modules/poker/factories/session-closed-listener-factory";
@@ -60,7 +60,7 @@ bootstrapApplication(AppComponent, {
         provideHttpClient(),
         importProvidersFrom(OidcConfigModule),
         RxStompService,
-        AccountService,
+        AccountEventService,
         HttpService,
         LocalStorageService,
         FlashMessageState,
@@ -87,7 +87,7 @@ bootstrapApplication(AppComponent, {
 
         // Poker factories
         AddTicketListenerFactory,
-        GameStateListenerFactory,
+        StateListenerFactory,
         PokerStartListenerFactory,
         PokerTicketDeleteListenerFactory,
         RoundStartListenerFactory,
