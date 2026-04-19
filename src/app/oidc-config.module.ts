@@ -5,6 +5,7 @@ import {
 import {NgModule}           from "@angular/core";
 import {AuthStorageService} from "./services/auth-storage.service";
 import {environment}        from "../environments/environment";
+import {IdsUserService}     from "./services/ids-user-service";
 
 @NgModule({
     imports:   [
@@ -31,4 +32,7 @@ import {environment}        from "../environments/environment";
 })
 export class OidcConfigModule
 {
+    constructor(private idsUserService: IdsUserService) {
+        this.idsUserService.initializeAuthState();
+    }
 }

@@ -42,7 +42,7 @@ export class AccountEventService
 
     public getCurrentUser(): IUserProfile
     {
-        const rawInsecureUser = this.idsUserService.getUsername;
+        const rawInsecureUser = this.idsUserService.userNickName;
         if (null == rawInsecureUser)
         {
             throw new Error("Not logged in");

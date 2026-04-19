@@ -25,7 +25,4 @@ import {IdsUserService} from "./services/ids-user-service";
 )
 export class AppModule
 {
-    constructor(private idsUserService: IdsUserService) {
-        this.idsUserService.initializeAuthState();
-    }
 }

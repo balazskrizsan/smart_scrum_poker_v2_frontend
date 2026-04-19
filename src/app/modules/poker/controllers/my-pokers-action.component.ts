@@ -4,17 +4,16 @@ import {
 }                              from '@angular/core';
 import {Forms}                 from '../forms';
 import {FormGroup}             from "@angular/forms";
-import {RxStompService}      from "../../commons/services/rx-stomp-service";
-import {AccountEventService} from "../../account/service/account-event.service";
-import {SocketDestination}   from "../../commons/enums/socket-destination";
+import {RxStompService}        from "../../commons/services/rx-stomp-service";
+import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {BehaviorSubject}       from "rxjs";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
 import {IMyPokersResponse}     from "../interfaces/i-my-pokers-response";
 import {IPoker}                from "../interfaces/i-poker";
 import {UrlService}            from "../../commons/services/url-service";
 import {RouterModule}          from "@angular/router";
-import {CommonModule}           from "@angular/common";
-import {IdsUserService} from "../../../services/ids-user-service";
+import {CommonModule}          from "@angular/common";
+import {IdsUserService}        from "../../../services/ids-user-service";
 
 @Component(
   {
@@ -30,8 +29,8 @@ export class MyPokersActionComponent implements OnDestroy
     protected urlService = UrlService;
     protected form: FormGroup;
     protected myPokersListener: ISubscriptionListener<IMyPokersResponse>;
-    private myPokersSubject = new BehaviorSubject<Array<IPoker>>([]);
-    protected myPokers$ = this.myPokersSubject.asObservable();
+    private myPokersSubjectBS = new BehaviorSubject<Array<IPoker>>([]);
+    protected myPokers$ = this.myPokersSubjectBS.asObservable();
 
     public constructor(
       protected forms: Forms,
@@ -39,18 +38,18 @@ export class MyPokersActionComponent implements OnDestroy
       private idsUserService: IdsUserService,
     )
     {
-        let user = this.idsUserService.getCurrentUserProfileOrRedirect();
+        let sub = this.idsUserService.subOrRedirectToLogin;
 
         this.myPokersListener = this.rxStompService.getSubscription<IMyPokersResponse>(
           '/user/queue/reply',
-          SocketDestination.POKER__MY_TICKETS
+          SocketDestination.POKER__MY_POKERS
         );
 
         this.myPokersListener.$subscription = this.myPokersListener.observable.subscribe(
-          (body) => this.myPokersSubject.next(body.data.pokers)
+          (body) => this.myPokersSubjectBS.next(body.data.pokers)
         );
 
-        this.rxStompService.publish(SocketDestination.POKER__MY_TICKETS, {userIdInsecure: user.userId});
+        this.rxStompService.publish(SocketDestination.POKER__MY_POKERS, {idsUserId: sub});
     }
 
     ngOnDestroy(): void
