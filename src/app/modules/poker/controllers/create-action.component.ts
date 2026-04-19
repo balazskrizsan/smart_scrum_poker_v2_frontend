@@ -44,7 +44,7 @@ export class CreateActionComponent implements OnDestroy, OnInit
           .getSubscription<IStartResponse>('/user/queue/reply', SocketDestination.RECEIVE_POKER_START);
         this.createPokerListener.$subscription = this.createPokerListener.observable.subscribe(
           (body) =>
-            this.routerNavigateService.navigateToPoker(body.data.poker.idSecure)
+            this.routerNavigateService.navigateToPoker(body.data.poker.publicId)
         );
     }
 

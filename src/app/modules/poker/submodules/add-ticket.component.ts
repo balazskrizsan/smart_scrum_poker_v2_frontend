@@ -47,7 +47,7 @@ export class AddTicketComponent
           SocketDestination.SEND__POKER__NEW_TICKET_CREATE,
           {
               userIdSecure:  this.accountService.getCurrentUser().userId,
-              pokerIdSecure: this.state.poker.idSecure,
+              pokerIdSecure: this.state.poker.publicId,
               ticketName:    this.forms.getField("ticketName").getRawValue(),
           }
         );
