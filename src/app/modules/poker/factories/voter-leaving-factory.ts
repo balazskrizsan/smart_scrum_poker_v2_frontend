@@ -20,7 +20,7 @@ export class VoterLeavingFactory
     public create(): ISubscriptionListener<IVoterLeavingResponse>
     {
         const listener = this.rxStompService.getSubscription<IVoterLeavingResponse>(
-          `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
+          `/queue/reply-${this.pokerStateStore.state.pokerPublicIdFromQueryParams}`,
           SocketDestination.RECEIVE__POKER__VOTER_LEAVING
         );
 

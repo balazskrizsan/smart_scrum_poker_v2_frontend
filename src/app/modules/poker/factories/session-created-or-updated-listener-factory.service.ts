@@ -20,7 +20,7 @@ export class SessionCreatedOrUpdatedListenerFactory
     {
         const sessionCreatedOrUpdatedListener = this.rxStompService
           .getSubscription<ISessionResponse>(
-            `/queue/reply-${state.pokerIdSecureFromParams}`,
+            `/queue/reply-${state.pokerPublicIdFromQueryParams}`,
             SocketDestination.RECEIVE_SESSION_CREATED_OR_UPDATED
           );
 

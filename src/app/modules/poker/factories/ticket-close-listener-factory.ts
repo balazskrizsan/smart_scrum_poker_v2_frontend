@@ -20,7 +20,7 @@ export class TicketCloseListenerFactory
     public create(): ISubscriptionListener<IVoteStopResponse>
     {
         const ticketCloseListener = this.rxStompService.getSubscription<IVoteStopResponse>(
-          `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
+          `/queue/reply-${this.pokerStateStore.state.pokerPublicIdFromQueryParams}`,
           SocketDestination.RECEIVE_POKER_TICKET_CLOSE
         );
 

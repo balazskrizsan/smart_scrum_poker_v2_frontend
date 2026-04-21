@@ -1,13 +1,13 @@
 import {
     Component,
     Input
-}                            from "@angular/core";
-import {IPokerState}         from "../interfaces/i-poker-state";
-import {AccountEventService} from "../../account/service/account-event.service";
-import {SocketDestination}   from "../../commons/enums/socket-destination";
-import {RxStompService}      from "../../commons/services/rx-stomp-service";
-import {ITicket}             from "../interfaces/i-ticket";
-import {PokerStateStore}     from "../poker-state-store.service";
+}                          from "@angular/core";
+import {IPokerState}       from "../interfaces/i-poker-state";
+import {SocketDestination} from "../../commons/enums/socket-destination";
+import {RxStompService}    from "../../commons/services/rx-stomp-service";
+import {ITicket}           from "../interfaces/i-ticket";
+import {PokerStateStore}   from "../poker-state-store.service";
+import {IdsUserService}    from "../../../services/ids-user-service";
 
 @Component({
     selector:    'app-ticket-header',
@@ -22,7 +22,7 @@ export class TicketHeaderComponent
 
     constructor(
       private rxStompService: RxStompService,
-      private accountService: AccountEventService,
+      private idsUserService: IdsUserService,
       private pokerStateStore: PokerStateStore
     )
     {
@@ -30,14 +30,14 @@ export class TicketHeaderComponent
 
     protected isAdmin(): boolean
     {
-        return null != this.state.owner && this.accountService.getCurrentUser().userId == this.state.owner.userId;
+        return null != this.state.owner && this.idsUserService.sub == this.state.owner.userId;
     }
 
     protected startTicket(ticketId: number)
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_VOTE_START
-            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{pokerIdSecure}", this.state.pokerPublicIdFromQueryParams)
             .replace("{ticketId}", ticketId.toString(10)),
           ''
         );
@@ -47,7 +47,7 @@ export class TicketHeaderComponent
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_TICKET_DELETE
-            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{pokerIdSecure}", this.state.pokerPublicIdFromQueryParams)
             .replace("{ticketId}", ticketId.toString(10)),
           ''
         );
@@ -57,7 +57,7 @@ export class TicketHeaderComponent
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_VOTE_STOP
-            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{pokerIdSecure}", this.state.pokerPublicIdFromQueryParams)
             .replace("{ticketId}", this.state.activeTicketId.toString(10)),
           ''
         );
@@ -68,7 +68,7 @@ export class TicketHeaderComponent
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_TICKET_CLOSE
-            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{pokerIdSecure}", this.state.pokerPublicIdFromQueryParams)
             .replace("{ticketId}", this.state.activeTicketId.toString(10)),
           ''
         );
@@ -78,7 +78,7 @@ export class TicketHeaderComponent
     {
         this.rxStompService.publish(
           SocketDestination.SEND__POKER__TICKET_OPEN
-            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{pokerIdSecure}", this.state.pokerPublicIdFromQueryParams)
             .replace("{ticketId}", ticketId.toString(10)),
           ''
         );

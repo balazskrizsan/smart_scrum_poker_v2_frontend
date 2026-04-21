@@ -21,7 +21,7 @@ export class PokerTicketDeleteListenerFactory
     {
         const ticketDeleteListener = this.rxStompService
           .getSubscription<ITicketDeleteResponse>(
-            `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
+            `/queue/reply-${this.pokerStateStore.state.pokerPublicIdFromQueryParams}`,
             SocketDestination.RECEIVE_POKER_TICKET_DELETE
           );
 

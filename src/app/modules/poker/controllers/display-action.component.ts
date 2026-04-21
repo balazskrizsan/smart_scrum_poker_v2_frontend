@@ -6,9 +6,8 @@ import {
 import {Forms}                 from '../forms';
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
-import {ActivatedRoute}      from "@angular/router";
-import {AccountEventService} from "../../account/service/account-event.service";
-import {PokerStateStore}     from "../poker-state-store.service";
+import {ActivatedRoute}        from "@angular/router";
+import {PokerStateStore}       from "../poker-state-store.service";
 import {SubscriptionService}   from "../service/subscription-service";
 import {environment}           from '../../../../environments/environment';
 import {CommonModule}          from "@angular/common";
@@ -18,6 +17,7 @@ import {OnlineVotersComponent} from "../submodules/online-voters.component";
 import {VoterListComponent}    from "../submodules/voter-list.component";
 import {VoterTableComponent}   from "../submodules/voter-table.component";
 import {FlashMessageService}   from "../../flash-message/services/flash-message-service";
+import {IdsUserService}        from "../../../services/ids-user-service";
 import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-level-enum";
 
 @Component({
@@ -43,13 +43,13 @@ export class DisplayActionComponent implements OnInit, OnDestroy
       private pokerStateStore: PokerStateStore,
       private rxStompService: RxStompService,
       private activatedRoute: ActivatedRoute,
-      public accountService: AccountEventService,
+      public idsUserService: IdsUserService,
       private subscriptionService: SubscriptionService,
       private flashMessageService: FlashMessageService,
     )
     {
         this.pokerStateStore.updateState({
-            pokerIdSecureFromParams: this.activatedRoute.snapshot.paramMap.get('secureId')
+            pokerPublicIdFromQueryParams: this.activatedRoute.snapshot.paramMap.get('pokerPublicId')
         });
 
         subscriptionService.subscribe();
@@ -58,7 +58,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
     protected copyShareLink(): void
     {
         const currentState = this.pokerStateStore.state;
-        const shareUrl = `${this.appHost}poker/display/${currentState.pokerIdSecureFromParams}`;
+        const shareUrl = `${this.appHost}poker/display/${currentState.pokerPublicIdFromQueryParams}`;
         navigator.clipboard.writeText(shareUrl).then(() =>
         {
             this.flashMessageService.push({
@@ -81,7 +81,7 @@ export class DisplayActionComponent implements OnInit, OnDestroy
         const currentState = this.pokerStateStore.state;
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_STATE
-            .replace("{pokerPublicId}", currentState.pokerIdSecureFromParams),
+            .replace("{pokerPublicId}", currentState.pokerPublicIdFromQueryParams),
           ''
         );
     }

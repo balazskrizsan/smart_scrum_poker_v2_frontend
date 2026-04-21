@@ -49,7 +49,7 @@ export class IdsUserService
 
     get subOrRedirectToLogin(): string
     {
-
+        // @todo: add redir logic
         return this.subBS.value;
     }
 

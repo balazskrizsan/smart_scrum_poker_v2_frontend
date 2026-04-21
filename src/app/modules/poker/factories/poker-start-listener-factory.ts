@@ -18,7 +18,7 @@ export class PokerStartListenerFactory
     public create(): ISubscriptionListener<IStartResponse>
     {
         const pokerStartListener = this.rxStompService.getSubscription<IStartResponse>(
-          `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
+          `/queue/reply-${this.pokerStateStore.state.pokerPublicIdFromQueryParams}`,
           SocketDestination.RECEIVE_POKER_START
         );
 

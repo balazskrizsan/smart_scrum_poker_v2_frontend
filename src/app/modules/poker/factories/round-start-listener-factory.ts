@@ -21,7 +21,7 @@ export class RoundStartListenerFactory
     public create(): ISubscriptionListener<IStartRound>
     {
         const roundStartListener = this.rxStompService.getSubscription<IStartRound>(
-          `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
+          `/queue/reply-${this.pokerStateStore.state.pokerPublicIdFromQueryParams}`,
           SocketDestination.RECEIVE_POKER_VOTE_START
         );
 

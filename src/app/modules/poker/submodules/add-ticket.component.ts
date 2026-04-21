@@ -2,22 +2,21 @@ import {
     Component,
     Input
 }                          from "@angular/core";
-import {IPokerState}   from "../interfaces/i-poker-state";
+import {IPokerState}       from "../interfaces/i-poker-state";
 import {
     FormGroup,
-    FormsModule,
     ReactiveFormsModule
-} from "@angular/forms";
-import {NewTicketForm} from "./forms";
+}                          from "@angular/forms";
+import {NewTicketForm}     from "./forms";
 import {SocketDestination} from "../../commons/enums/socket-destination";
-import {RxStompService}      from "../../commons/services/rx-stomp-service";
-import {AccountEventService} from "../../account/service/account-event.service";
+import {RxStompService}    from "../../commons/services/rx-stomp-service";
+import {IdsUserService}    from "../../../services/ids-user-service";
 
 @Component({
     selector:    'add-ticket',
-    standalone:   true,
+    standalone:  true,
     templateUrl: './views/add-ticket.html',
-    imports: [ReactiveFormsModule],
+    imports:     [ReactiveFormsModule],
     providers:   [NewTicketForm],
 })
 export class AddTicketComponent
@@ -29,7 +28,7 @@ export class AddTicketComponent
     public constructor(
       protected forms: NewTicketForm,
       protected rxStompService: RxStompService,
-      protected accountService: AccountEventService,
+      protected idsUserService: IdsUserService,
     )
     {
         this.form = this.forms.createCruForm();
@@ -46,7 +45,7 @@ export class AddTicketComponent
         this.rxStompService.publish(
           SocketDestination.SEND__POKER__NEW_TICKET_CREATE,
           {
-              userIdSecure:  this.accountService.getCurrentUser().userId,
+              userIdSecure:  this.idsUserService.sub,
               pokerIdSecure: this.state.poker.publicId,
               ticketName:    this.forms.getField("ticketName").getRawValue(),
           }

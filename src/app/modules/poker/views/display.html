@@ -29,7 +29,9 @@
             </div>
             <div class="birthday-author-name" style="padding-top: 15px">
               <div class="birthday-date"><strong>Share poker link</strong></div>
-              <div class="birthday-date share-link">{{ appHost }}poker/display/{{ state.pokerIdSecureFromParams }}</div>
+              <div class="birthday-date share-link">{{ appHost }}
+                poker/display/{{ state.pokerPublicIdFromQueryParams }}
+              </div>
             </div>
           </div>
         </div>
@@ -45,7 +47,7 @@
       </div>
     </div>
 
-    @if (state.owner && accountService.getCurrentUser().idSecure==state.owner.idSecure) {
+    @if (state.owner && idsUserService.sub==state.owner.userId) {
       <add-ticket [state]="state"></add-ticket>
     }
 

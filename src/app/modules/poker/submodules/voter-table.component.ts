@@ -3,19 +3,19 @@ import {
     Input,
 }                          from "@angular/core";
 import {SocketDestination} from "../../commons/enums/socket-destination";
-import {RxStompService}      from "../../commons/services/rx-stomp-service";
-import {AccountEventService} from "../../account/service/account-event.service";
-import {IPokerState}         from "../interfaces/i-poker-state";
+import {RxStompService}    from "../../commons/services/rx-stomp-service";
+import {IPokerState}       from "../interfaces/i-poker-state";
 import {ITicket}           from "../interfaces/i-ticket";
 import {
     CommonModule,
     KeyValue
-} from "@angular/common";
+}                          from "@angular/common";
+import {IdsUserService}    from "../../../services/ids-user-service";
 
 @Component({
     selector:    'app-voter-table',
-    standalone:   true,
-    imports: [CommonModule],
+    standalone:  true,
+    imports:     [CommonModule],
     templateUrl: './views/voter-table.html',
     providers:   [],
 })
@@ -44,7 +44,7 @@ export class VoterTableComponent
 
     constructor(
       private rxStompService: RxStompService,
-      private accountService: AccountEventService,
+      private idsUserService: IdsUserService,
     )
     {
     }
@@ -76,11 +76,11 @@ export class VoterTableComponent
     {
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_VOTE
-            .replace("{pokerIdSecure}", this.state.pokerIdSecureFromParams)
+            .replace("{pokerIdSecure}", this.state.pokerPublicIdFromQueryParams)
             .replace("{ticketId}", this.ticket.id.toString(10)),
           {
-              userIdSecure:    this.accountService.getCurrentUser().userId,
-              pokerIdSecure:   this.state.pokerIdSecureFromParams,
+              userIdSecure:    this.idsUserService.sub,
+              pokerIdSecure:   this.state.pokerPublicIdFromQueryParams,
               ticketId:        this.ticket.id,
               voteUncertainty: this.votes.uncertainty,
               voteComplexity:  this.votes.complexity,

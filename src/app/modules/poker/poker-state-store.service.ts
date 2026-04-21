@@ -8,19 +8,19 @@ import _                 from 'lodash';
 export class PokerStateStore
 {
     private _state: IPokerState = {
-        tickets:                 [],
-        inPokerUserProfiles:     [],
-        idsUsersWithSession:     {},
-        owner:                   null,
-        userVoteStats:           {},
-        pokerIdSecureFromParams: null,
-        poker:                   null,
-        activeTicketId:          0,
-        openedTicketId:          0,
-        votes:                   {},
-        userVotes:               {},
-        initDone:                false,
-        finishedTicketIds:       [],
+        tickets:                      [],
+        inPokerUserProfiles:          [],
+        idsUsersWithSession:          {},
+        owner:                        null,
+        userVoteStats:                {},
+        pokerPublicIdFromQueryParams: null,
+        poker:                        null,
+        activeTicketId:               0,
+        openedTicketId:               0,
+        votes:                        {},
+        userVotes:                    {},
+        initDone:                     false,
+        finishedTicketIds:            [],
     };
 
     private stateSubject = new BehaviorSubject<IPokerState>(this._state);

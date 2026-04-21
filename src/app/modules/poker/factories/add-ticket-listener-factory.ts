@@ -20,7 +20,7 @@ export class AddTicketListenerFactory
     public create(): ISubscriptionListener<IAddTicketResponse>
     {
         const listener = this.rxStompService.getSubscription<IAddTicketResponse>(
-          `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
+          `/queue/reply-${this.pokerStateStore.state.pokerPublicIdFromQueryParams}`,
           SocketDestination.RECEIVE__POKER__NEW_TICKET_CREATE
         );
 

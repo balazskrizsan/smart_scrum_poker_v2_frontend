@@ -37,7 +37,7 @@ export const routes: Routes = [
                   .then(m => m.MyPokersActionComponent)
             },
             {
-                path:          'display/:secureId',
+                path:          'display/:pokerPublicId',
                 loadComponent: () => import('./modules/poker/controllers/display-action.component')
                   .then(m => m.DisplayActionComponent)
             }

@@ -20,7 +20,7 @@ export class SessionClosedListenerFactory
     public create(): ISubscriptionListener<ISessionResponse>
     {
         const sessionClosedListener = this.rxStompService.getSubscription<ISessionResponse>(
-          `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
+          `/queue/reply-${this.pokerStateStore.state.pokerPublicIdFromQueryParams}`,
           SocketDestination.RECEIVE_SESSION_CLOSED
         );
 

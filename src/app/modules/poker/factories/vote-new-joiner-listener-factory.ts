@@ -21,7 +21,7 @@ export class VoteNewJoinerListenerFactory
     {
         const voteNewJoinerListener = this.rxStompService
           .getSubscription<IVoteNewJoinerResponse>(
-            `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
+            `/queue/reply-${this.pokerStateStore.state.pokerPublicIdFromQueryParams}`,
             SocketDestination.RECEIVE_POKER_VOTE_NEW_JOINER
           );
 

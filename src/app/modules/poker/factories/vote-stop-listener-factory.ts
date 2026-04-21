@@ -20,7 +20,7 @@ export class VoteStopListenerFactory
     public create(): ISubscriptionListener<IVoteStopResponse>
     {
         const voteStopListener = this.rxStompService.getSubscription<IVoteStopResponse>(
-          `/queue/reply-${this.pokerStateStore.state.pokerIdSecureFromParams}`,
+          `/queue/reply-${this.pokerStateStore.state.pokerPublicIdFromQueryParams}`,
           SocketDestination.RECEIVE_POKER_VOTE_STOP
         );
 

@@ -7,7 +7,7 @@ import {ITicket}       from "./i-ticket";
 export interface IPokerState
 {
     tickets: Array<ITicket>;
-    pokerIdSecureFromParams: string;
+    pokerPublicIdFromQueryParams: string;
     poker: IPoker;
     inPokerUserProfiles: Array<IUserProfile>;
     idsUsersWithSession: Record<string, boolean>;
