@@ -55,8 +55,6 @@ export class IdsUserService
 
     getUserNickname$(): Observable<string>
     {
-        console.log("XXXXXXXXXXXXXXX", this.getUserInfo().pipe(map(info => info)).subscribe(t => console.log(t)));
-
         return this.getUserInfo().pipe(map(info => info?.userData?.nickname || info?.userData?.name || 'N/A'));
     }
 

@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    @if (state.owner && idsUserService.sub==state.owner.userId) {
+    @if (state.ownerIdsUserId && idsUserService.sub==state.ownerIdsUserId) {
       <add-ticket [state]="state"></add-ticket>
     }
 

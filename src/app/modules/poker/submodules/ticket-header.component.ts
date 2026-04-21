@@ -30,7 +30,7 @@ export class TicketHeaderComponent
 
     protected isAdmin(): boolean
     {
-        return null != this.state.owner && this.idsUserService.sub == this.state.owner.userId;
+        return null != this.state.ownerIdsUserId && this.idsUserService.sub == this.state.ownerIdsUserId;
     }
 
     protected startTicket(ticketId: number)

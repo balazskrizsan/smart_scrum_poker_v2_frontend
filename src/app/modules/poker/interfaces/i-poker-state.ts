@@ -11,7 +11,7 @@ export interface IPokerState
     poker: IPoker;
     inPokerUserProfiles: Array<IUserProfile>;
     idsUsersWithSession: Record<string, boolean>;
-    owner: IUserProfile;
+    ownerIdsUserId: string;
     userVoteStats: Record<number, IVoteStat>;
     activeTicketId: number;
     openedTicketId: number;

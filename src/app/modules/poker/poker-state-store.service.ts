@@ -11,7 +11,7 @@ export class PokerStateStore
         tickets:                      [],
         inPokerUserProfiles:          [],
         idsUsersWithSession:          {},
-        owner:                        null,
+        ownerIdsUserId:               null,
         userVoteStats:                {},
         pokerPublicIdFromQueryParams: null,
         poker:                        null,

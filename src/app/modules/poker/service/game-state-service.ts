@@ -48,7 +48,7 @@ export class GameStateService
             votes:               votes,
             userVoteStats:       userVoteStats,
             finishedTicketIds:   Object.keys(body.data.votes).map(k => Number(k)),
-            owner:               body.data.owner,
+            ownerIdsUserId:      body.data.owner.id,
             idsUsersWithSession: idsUsersWithSession,
             activeTicketId:      activeTicketId,
             openedTicketId:      openedTicketId,
