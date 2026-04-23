@@ -19,13 +19,13 @@ export class VoteService
     public setVote(body: IStdApiResponse<IVoteResponse>)
     {
         const state = this.pokerStateStore.state;
-        const insecureUser: IUserProfile = body.data.voterInsecureUser;
+        const userProfile = body.data.userProfile;
 
-        this.pokerStateStore.addVote(state.activeTicketId, insecureUser.userId, insecureUser);
+        this.pokerStateStore.addVote(state.activeTicketId, userProfile);
 
         this.flashMessageService.push({
             messageLevel: FlashMessageLevelEnum.OK,
-            message:      `Vote from: ${insecureUser.userName}`
+            message:      `Vote from: ${userProfile.userNick}` // @todo: get username
         })
     }
 }

@@ -51,14 +51,14 @@ export class PokerStateStore
         return this._state.openedTicketId;
     }
 
-    public addVote(ticketId: number, userIdSecure: string, user: IUserProfile): void
+    public addVote(ticketId: number, userProfile: IUserProfile): void
     {
         const updatedVotes = {...this._state.votes};
         if (!updatedVotes[ticketId])
         {
             updatedVotes[ticketId] = {};
         }
-        updatedVotes[ticketId][userIdSecure] = user;
+        updatedVotes[ticketId][userProfile.userId] = userProfile;
         this.updateState({votes: updatedVotes});
     }
 

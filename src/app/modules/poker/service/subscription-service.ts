@@ -48,17 +48,17 @@ export class SubscriptionService
     public subscribe()
     {
         this.listeners.push(this.gameStateListenerFactory.create());
-        // this.listeners.push(this.pokerStartListenerFactory.create());
-        // this.listeners.push(this.voteListenerFactory.create());
-        // this.listeners.push(this.sessionClosedListenerFactory.create());
-        // this.listeners.push(this.roundStartListenerFactory.create());
-        // this.listeners.push(this.voteNewJoinerListenerFactory.create());
-        // this.listeners.push(this.voteStopListenerFactory.create());
-        // this.listeners.push(this.ticketCloseListenerFactory.create());
-        // this.listeners.push(this.ticketOpenListenerFactory.create());
-        // this.listeners.push(this.ticketDeleteListenerFactory.create());
-        // this.listeners.push(this.addTicketListenerFactory.create());
-        // this.listeners.push(this.voterLeavingFactory.create());
+        this.listeners.push(this.pokerStartListenerFactory.create());
+        this.listeners.push(this.voteListenerFactory.create());
+        this.listeners.push(this.sessionClosedListenerFactory.create());
+        this.listeners.push(this.roundStartListenerFactory.create());
+        this.listeners.push(this.voteNewJoinerListenerFactory.create());
+        this.listeners.push(this.voteStopListenerFactory.create());
+        this.listeners.push(this.ticketCloseListenerFactory.create());
+        this.listeners.push(this.ticketOpenListenerFactory.create());
+        this.listeners.push(this.ticketDeleteListenerFactory.create());
+        this.listeners.push(this.addTicketListenerFactory.create());
+        this.listeners.push(this.voterLeavingFactory.create());
     }
 
     public unsubscribe()
