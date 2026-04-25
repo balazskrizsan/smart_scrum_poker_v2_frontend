@@ -24,7 +24,7 @@ export class GameStateService
 
         body.data.idsUsersWithSession.forEach(iu =>
         {
-            idsUsersWithSession[iu.userId] = true;
+            idsUsersWithSession[iu.id] = true;
         });
 
         let possibleStartedTickets = body.data.tickets.filter(t => t.isActive);

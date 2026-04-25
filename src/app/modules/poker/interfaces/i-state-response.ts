@@ -11,7 +11,7 @@ export interface IStateResponse
     userProfiles: Array<IUserProfile>;
     votes: Record<number, Record<string, IUserProfile>>;
     owner: IIdsUser;
-    idsUsersWithSession: Array<IUserProfile>;
+    idsUsersWithSession: Array<IIdsUser>;
     votesWithVoteStatList: Record<number, IVotesWithVoteStat>;
     currentIdsUser: IIdsUser;
     currentUserProfile: IUserProfile;
