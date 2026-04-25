@@ -44,7 +44,7 @@ export class GameStateService
         this.pokerStateStore.updateState({
             poker:               body.data.poker,
             tickets:             body.data.tickets,
-            inPokerUserProfiles: body.data.inGameInsecureUsers,
+            userProfiles:        body.data.userProfiles,
             votes:               votes,
             userVoteStats:       userVoteStats,
             finishedTicketIds:   Object.keys(body.data.votes).map(k => Number(k)),

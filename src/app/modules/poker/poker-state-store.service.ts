@@ -9,7 +9,7 @@ export class PokerStateStore
 {
     private _state: IPokerState = {
         tickets:                      [],
-        inPokerUserProfiles:          [],
+        userProfiles:                 [],
         idsUsersWithSession:          {},
         ownerIdsUserId:               null,
         userVoteStats:                {},
@@ -97,12 +97,12 @@ export class PokerStateStore
 
     public addInPokerUserProfile(user: IUserProfile): void
     {
-        const updatedInGameUsers = [...this._state.inPokerUserProfiles];
-        if (!_.find(updatedInGameUsers, user))
+        const userProfiles = Array.isArray(this._state.userProfiles) ? [...this._state.userProfiles] : [];
+        if (!_.find(userProfiles, user))
         {
-            updatedInGameUsers.push(user);
+            userProfiles.push(user);
         }
-        this.updateState({inPokerUserProfiles: updatedInGameUsers});
+        this.updateState({userProfiles: userProfiles});
     }
 
     public setIdsUserSession(userId: string, hasSession: boolean): void

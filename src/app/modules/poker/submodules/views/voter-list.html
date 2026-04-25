@@ -1,7 +1,7 @@
 @if (state.openedTicketId==ticket.id) {
   <div class="container">
     <div class="row gx-1">
-      @for (user of state.inPokerUserProfiles; track user.idSecure) {
+      @for (user of state.userProfiles; track user.userId) {
         <div
             class="col-lg-3 col-md-6"
         >
@@ -9,10 +9,10 @@
             <div class="birthday-item inline-items" style="overflow: hidden">
               <div class="birthday-author-name">
                 <span class="h6 author-name">{{ user.userName }}</span>
-                <div class="birthday-date">{{ getVoteState(user.idSecure, ticket.id) }}</div>
+                <div class="birthday-date">{{ getVoteState(user.userId, ticket.id) }}</div>
               </div>
               <h2 class="btn btn-sm bg-blue" style="position: absolute;right: 20px;top: 5px;font-size: 20px">
-                  {{ getCalculatedPoint(ticket.id, user.idSecure) }}
+                  {{ getCalculatedPoint(ticket.id, user.userId) }}
               </h2>
             </div>
           </div>

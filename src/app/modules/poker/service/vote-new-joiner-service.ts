@@ -13,7 +13,7 @@ export class VoteNewJoinerService
 
     public setVoteNewJoiner(body: IStdApiResponse<IVoteNewJoinerResponse>)
     {
-        const userProfile = body.data.idsUser;
+        const userProfile = body.data.userProfile;
         this.pokerStateStore.addInPokerUserProfile(userProfile);
         this.pokerStateStore.setIdsUserSession(userProfile.userId, true);
     }

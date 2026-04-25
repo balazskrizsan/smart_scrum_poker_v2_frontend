@@ -9,7 +9,7 @@ export interface IPokerState
     tickets: Array<ITicket>;
     pokerPublicIdFromQueryParams: string;
     poker: IPoker;
-    inPokerUserProfiles: Array<IUserProfile>;
+    userProfiles: Array<IUserProfile>;
     idsUsersWithSession: Record<string, boolean>;
     ownerIdsUserId: string;
     userVoteStats: Record<number, IVoteStat>;

@@ -8,9 +8,11 @@ export interface IStateResponse
 {
     poker: IPoker;
     tickets: Array<ITicket>;
-    inGameInsecureUsers: Array<IUserProfile>;
-    idsUsersWithSession: Array<IUserProfile>;
+    userProfiles: Array<IUserProfile>;
     votes: Record<number, Record<string, IUserProfile>>;
-    votesWithVoteStatList: Record<number, IVotesWithVoteStat>;
     owner: IIdsUser;
+    idsUsersWithSession: Array<IUserProfile>;
+    votesWithVoteStatList: Record<number, IVotesWithVoteStat>;
+    currentIdsUser: IIdsUser;
+    currentUserProfile: IUserProfile;
 }
