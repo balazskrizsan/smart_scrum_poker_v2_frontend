@@ -45,7 +45,7 @@
               "src/assets/fonts/webfonts",
               "src/assets/css"
             ],
-            "styles": ["src/sass/main.scss", "src/assets/css/bootstrap.css"],
+            "styles": ["src/sass/main.scss"],
             "scripts": [],
             "allowedCommonJsDependencies": ["jquery", "bootstrap", "lodash"]
           },
