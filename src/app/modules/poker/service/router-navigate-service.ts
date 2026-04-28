@@ -1,20 +1,15 @@
-import {Injectable}          from "@angular/core";
-import {Router}              from "@angular/router";
-import {SubscriptionService} from "./subscription-service";
+import {Injectable} from "@angular/core";
+import {Router}     from "@angular/router";
 
 @Injectable()
 export class RouterNavigateService
 {
-    public constructor(
-      private router: Router,
-      private subscriptionService: SubscriptionService
-    )
+    public constructor(private router: Router)
     {
     }
 
     public navigateToPoker(pokerIdSecure: string): Promise<boolean>
     {
-        this.subscriptionService.unsubscribe();
         return this.router.navigate(['/poker/display/' + pokerIdSecure]);
     }
 }

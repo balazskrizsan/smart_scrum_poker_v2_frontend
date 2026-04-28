@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate
           {
               if (!isAuthenticated)
               {
-                  alert("must be logged in")
+                  console.log("Must be logged in")
                   this.router.navigate(['/']);
 
                   return false;

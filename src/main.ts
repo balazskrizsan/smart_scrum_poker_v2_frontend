@@ -23,7 +23,7 @@ import {PokerTicketDeleteService}       from "./app/modules/poker/service/poker-
 import {RoundStartService}              from "./app/modules/poker/service/round-start-service";
 import {SessionClosedService}           from "./app/modules/poker/service/session-closed-service";
 import {SessionCreatedOrUpdatedService} from "./app/modules/poker/service/session-created-or-updated-service";
-import {SubscriptionService}            from "./app/modules/poker/service/subscription-service";
+import {SubscriptionService}            from "./app/services/subscription-service";
 import {TicketCloseService}             from "./app/modules/poker/service/ticket-close-service";
 import {VoteNewJoinerService}           from "./app/modules/poker/service/vote-new-joiner-service";
 import {VoteService}                    from "./app/modules/poker/service/vote-service";

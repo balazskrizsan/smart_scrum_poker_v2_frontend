@@ -157,4 +157,24 @@ export class PokerStateStore
         this._state = {...this._state, ...updates};
         this.stateSubject.next(this._state);
     }
+
+    public reset(): void
+    {
+        this._state = {
+            tickets:                      [],
+            userProfiles:                 [],
+            idsUsersWithSession:          {},
+            ownerIdsUserId:               null,
+            userVoteStats:                {},
+            pokerPublicIdFromQueryParams: null,
+            poker:                        null,
+            activeTicketId:               0,
+            openedTicketId:               0,
+            votes:                        {},
+            userVotes:                    {},
+            initDone:                     false,
+            finishedTicketIds:            [],
+        };
+        this.stateSubject.next(this._state);
+    }
 }

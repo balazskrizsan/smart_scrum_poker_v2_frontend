@@ -1,23 +1,21 @@
 import {Injectable}                       from "@angular/core";
-import {StateListenerFactory}             from "../factories/state-listener-factory.service";
-import {VoteListenerFactory}              from "../factories/vote-listener-factory";
-import {PokerStartListenerFactory}        from "../factories/poker-start-listener-factory";
-import {SessionClosedListenerFactory}     from "../factories/session-closed-listener-factory";
-import {RoundStartListenerFactory}        from "../factories/round-start-listener-factory";
-import {VoteNewJoinerListenerFactory}     from "../factories/vote-new-joiner-listener-factory";
-import {VoteStopListenerFactory}          from "../factories/vote-stop-listener-factory";
-import {TicketCloseListenerFactory}       from "../factories/ticket-close-listener-factory";
-import {TicketOpenListenerFactory}        from "../factories/ticket-open-listener-factory";
-import {PokerTicketDeleteListenerFactory} from "../factories/poker-ticket-delete-listener-factory.service";
-import {ISubscriptionListener}            from "../interfaces/i-subscription-listener";
-import {RxStompService}                   from "../../commons/services/rx-stomp-service";
-import {AddTicketListenerFactory}         from "../factories/add-ticket-listener-factory";
-import {VoterLeavingFactory}              from "../factories/voter-leaving-factory";
-import {SocketDestination}                from "../../commons/enums/socket-destination";
-import {AccountEventService}              from "../../account/service/account-event.service";
-import {PokerStateStore}                  from "../poker-state-store.service";
-import {IPokerState}                      from "../interfaces/i-poker-state";
-import {IdsUserService}                   from "../../../services/ids-user-service";
+import {StateListenerFactory}             from "../modules/poker/factories/state-listener-factory.service";
+import {VoteListenerFactory}              from "../modules/poker/factories/vote-listener-factory";
+import {PokerStartListenerFactory}        from "../modules/poker/factories/poker-start-listener-factory";
+import {SessionClosedListenerFactory}     from "../modules/poker/factories/session-closed-listener-factory";
+import {RoundStartListenerFactory}        from "../modules/poker/factories/round-start-listener-factory";
+import {VoteNewJoinerListenerFactory}     from "../modules/poker/factories/vote-new-joiner-listener-factory";
+import {VoteStopListenerFactory}          from "../modules/poker/factories/vote-stop-listener-factory";
+import {TicketCloseListenerFactory}       from "../modules/poker/factories/ticket-close-listener-factory";
+import {TicketOpenListenerFactory}        from "../modules/poker/factories/ticket-open-listener-factory";
+import {PokerTicketDeleteListenerFactory} from "../modules/poker/factories/poker-ticket-delete-listener-factory.service";
+import {ISubscriptionListener}            from "../modules/poker/interfaces/i-subscription-listener";
+import {RxStompService}                   from "../modules/commons/services/rx-stomp-service";
+import {AddTicketListenerFactory}         from "../modules/poker/factories/add-ticket-listener-factory";
+import {VoterLeavingFactory}              from "../modules/poker/factories/voter-leaving-factory";
+import {SocketDestination}                from "../modules/commons/enums/socket-destination";
+import {PokerStateStore}                  from "../modules/poker/poker-state-store.service";
+import {IdsUserService}                   from "./ids-user-service";
 
 @Injectable()
 export class SubscriptionService
@@ -25,7 +23,6 @@ export class SubscriptionService
     private readonly listeners: ISubscriptionListener<any>[] = [];
 
     public constructor(
-      private accountService: AccountEventService,
       private idsUserService: IdsUserService,
       private pokerStateStore: PokerStateStore,
       private rxStompService: RxStompService,
@@ -64,9 +61,9 @@ export class SubscriptionService
     public unsubscribe()
     {
         let sub = this.idsUserService.subOrRedirectToLogin;
-        let state: IPokerState = this.pokerStateStore.state;
+        let state = this.pokerStateStore.state;
 
-        if (state?.pokerPublicIdFromQueryParams)
+        if (state?.pokerPublicIdFromQueryParams != null)
         {
             this.rxStompService.publish(
               SocketDestination.SEND__POKER__VOTER_LEAVING,
@@ -75,7 +72,10 @@ export class SubscriptionService
                   pokerIdSecure: state.pokerPublicIdFromQueryParams
               }
             );
+            this.pokerStateStore.reset();
         }
+
         this.listeners.map(l => this.rxStompService.unsubscribe(l));
+        this.listeners.length = 0;
     }
 }

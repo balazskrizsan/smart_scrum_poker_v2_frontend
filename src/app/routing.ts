@@ -1,14 +1,17 @@
 import {Routes} from '@angular/router';
 import {AuthGuard} from './guards/auth.guard';
 import {AuthCallbackComponent} from './components/auth-callback/auth-callback.component';
+import {SocketSubscriptionCleanGuard} from "./guards/socket-subscription-clean.guard";
 
 export const routes: Routes = [
     {
         path:     'auth-callback',
+        canDeactivate: [SocketSubscriptionCleanGuard],
         component: AuthCallbackComponent
     },
     {
         path:     '',
+        canDeactivate: [SocketSubscriptionCleanGuard],
         children: [
             {
                 path:          '',
@@ -19,6 +22,7 @@ export const routes: Routes = [
     },
     {
         path:     'poker',
+        canDeactivate: [SocketSubscriptionCleanGuard],
         canActivate: [AuthGuard],
         children: [
             {
