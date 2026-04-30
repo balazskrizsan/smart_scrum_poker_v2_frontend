@@ -1,12 +1,18 @@
-import {IPokerState}     from "./interfaces/i-poker-state";
-import {Injectable}      from "@angular/core";
-import {BehaviorSubject} from "rxjs";
-import {IUserProfile}    from "../account/interfaces/i-user-profile";
-import _                 from 'lodash';
+import {IPokerState}    from "./interfaces/i-poker-state";
+import {Injectable}     from "@angular/core";
+import {
+    BehaviorSubject,
+    Observable
+}                       from "rxjs";
+import {IUserProfile}   from "../account/interfaces/i-user-profile";
+import _                from 'lodash';
+import {LoggingService} from "../../services/logging.service";
+import {LoggingGroup}   from "../../services/enums/logging-group";
 
 @Injectable()
 export class PokerStateStore
 {
+    private loggingService = new LoggingService().setGroups(LoggingGroup.OIDC);
     private _state: IPokerState = {
         tickets:                      [],
         userProfiles:                 [],
@@ -24,11 +30,16 @@ export class PokerStateStore
     };
 
     private stateSubject = new BehaviorSubject<IPokerState>(this._state);
-    public state$ = this.stateSubject.asObservable();
+    private _state$ = this.stateSubject.asObservable();
 
     public get state(): IPokerState
     {
         return this._state;
+    }
+
+    public get state$(): Observable<IPokerState>
+    {
+        return this._state$;
     }
 
     public setActiveTicketId(ticketId: number): void
@@ -151,8 +162,8 @@ export class PokerStateStore
             return acc;
         }, {} as Partial<IPokerState>);
 
-        console.log('Current state values before update:', currentValues);
-        console.log('Updated state values after update:', updates);
+        this.loggingService.info('Current state values before update:', currentValues);
+        this.loggingService.info('Updated state values after update:', updates);
 
         this._state = {...this._state, ...updates};
         this.stateSubject.next(this._state);

@@ -12,17 +12,21 @@ import {ISubscriptionListener} from "../../poker/interfaces/i-subscription-liste
 import {environment}           from '../../../../environments/environment';
 import {AuthService}           from "../../../services/auth.service";
 import {IdsUserService}        from "../../../services/ids-user-service";
+import {LoggingService}        from "../../../services/logging.service";
+import {LoggingGroup}          from "../../../services/enums/logging-group";
 
 @Injectable()
 export class RxStompService
 {
+    private authLoggingService = new LoggingService().setGroups(LoggingGroup.OIDC);
+    private socketLoggingService = new LoggingService().setGroups(LoggingGroup.SOCKET);
     private rxStomp: RxStomp = null;
     private headers: any = {};
 
     constructor(
       private authService: AuthService,
       private idsUserService: IdsUserService,
-      )
+    )
     {
         this.initializeConnection();
     }
@@ -33,7 +37,6 @@ export class RxStompService
         {
             if (!token) return;
 
-            console.log("=============== Token received:", token);
             this.checkAuthenticationAndConnect();
         });
     }
@@ -42,14 +45,13 @@ export class RxStompService
     {
         this.idsUserService.isAuthenticated$().pipe(take(1)).subscribe(isAuth =>
         {
-            console.log("=============== Authentication status:", isAuth);
+            this.authLoggingService.info("Authentication status:", isAuth);
 
             if (!isAuth)
             {
                 this.refreshTokenAndConnect();
             } else
             {
-                console.log("Token is valid");
                 this.setupStompConnection();
             }
         });
@@ -57,16 +59,16 @@ export class RxStompService
 
     private refreshTokenAndConnect(): void
     {
-        console.log("=============== Token expired, attempting refresh...");
+        this.authLoggingService.info("Token expired, attempting refresh...");
         this.authService.forceRefreshToken().pipe(take(1)).subscribe(refreshed =>
         {
             if (refreshed)
             {
-                console.log("=============== Token refreshed successfully");
+                this.authLoggingService.info("Token refreshed successfully");
                 this.setupStompConnection();
             } else
             {
-                console.log("=============== Token refresh failed, user may need to re-login");
+                this.authLoggingService.info("Token refresh failed, user may need to re-login");
                 // @todo: relogin
             }
         });
@@ -87,7 +89,7 @@ export class RxStompService
                 {
                     this.rxStomp.activate();
                 });
-                console.log("Reconnect done");
+                this.socketLoggingService.info("Reconnect done");
             }
         });
     }
@@ -100,8 +102,7 @@ export class RxStompService
         }
 
         this.rxStomp = new RxStomp();
-        
-        // Ensure we have the current token before connecting
+
         this.authService.getAccessToken$().pipe(take(1)).subscribe(token =>
         {
             if (token)
@@ -112,7 +113,7 @@ export class RxStompService
                     connectHeaders: this.headers,
                 });
                 this.rxStomp.activate();
-                console.log("Socket connected with token");
+                this.socketLoggingService.info("Socket connected with token");
             }
         });
 
@@ -121,7 +122,10 @@ export class RxStompService
 
     public getSubscription<T>(destination: string, socketDestinationFilter: SocketDestination): ISubscriptionListener<T>
     {
-        console.log(">>>> New socket subscription: ", {'destination': destination, 'filter': socketDestinationFilter});
+        this.socketLoggingService.info(
+          "New socket subscription: ",
+          {'destination': destination, 'filter': socketDestinationFilter}
+        );
 
         try
         {
@@ -130,14 +134,17 @@ export class RxStompService
               .pipe(
                 map((message): IStdApiResponse<T> => JSON.parse(message.body).body),
                 filter(body => body.socketResponseDestination == socketDestinationFilter),
-                tap(body => console.log(">>>> Socket response:", {destination, socketDestinationFilter, body})),
+                tap(body => this.socketLoggingService.info(
+                  "Socket response:",
+                  {destination, socketDestinationFilter, body}
+                )),
               );
 
             return {observable, destination, socketDestinationFilter, $subscription: null}
         }
         catch (e)
         {
-            console.log(e);
+            this.authLoggingService.error(e);
 
             throw new Error("Can't start socket connection: " + destination);
         }
@@ -145,7 +152,7 @@ export class RxStompService
 
     public unsubscribe<T>(handler: ISubscriptionListener<T>): void
     {
-        console.log(">>>> Unsubscription: ", {
+        this.socketLoggingService.info("Unsubscription: ", {
             destination:             handler.destination,
             socketDestinationFilter: handler.socketDestinationFilter
         });
@@ -164,7 +171,7 @@ export class RxStompService
             body:        JSON.stringify(rawBody)
         };
 
-        console.log(">>>> Socket publication: ", publication);
+        this.socketLoggingService.info("Socket publication: ", publication);
 
         this.rxStomp.publish(publication);
     }

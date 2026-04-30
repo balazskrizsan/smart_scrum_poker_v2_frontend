@@ -13,12 +13,15 @@ import {
     take
 }                     from "rxjs/operators";
 import {IUserProfile} from "../modules/account/interfaces/i-user-profile";
+import {LoggingService} from "./logging.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class IdsUserService
 {
+    private loggingService = new LoggingService();
+
     private isLoggedInBS = new BehaviorSubject<boolean>(false);
     public isLoggedIn$: Observable<boolean> = this.isLoggedInBS.asObservable();
 
@@ -28,7 +31,10 @@ export class IdsUserService
     private subBS = new BehaviorSubject<string>(null);
     private sub$: Observable<string> = this.subBS.asObservable();
 
-    constructor(private oidcSecurityService: OidcSecurityService, private authService: AuthService)
+    constructor(
+      private oidcSecurityService: OidcSecurityService,
+      private authService: AuthService,
+    )
     {
     }
 
@@ -89,10 +95,10 @@ export class IdsUserService
 
     public initializeAuthState(): void
     {
-        console.log("****> IDS User service init");
+        this.loggingService.info("IDS User service init");
         this.oidcSecurityService.isAuthenticated$.subscribe(authResult =>
         {
-            console.log("****> IDS User service init with result", authResult);
+            this.loggingService.info("IDS User service init with result", authResult);
             this.updateLoginStatus(authResult.isAuthenticated);
         });
     }
@@ -108,10 +114,11 @@ export class IdsUserService
             });
             this.getUserProfileSub$().subscribe(sub =>
             {
-                console.log("****> Setting up subject", sub);
+                this.loggingService.info("Setting up subject", sub);
                 this.subBS.next(sub)
             });
-        } else
+        }
+        else
         {
             this.userNickNameBS.next("")
             this.subBS.next(null);

@@ -2,10 +2,13 @@ import {Injectable}      from "@angular/core";
 import {IStdApiResponse} from "../../../interfaces/i-std-api-response";
 import {IStateResponse}  from "../interfaces/i-state-response";
 import {PokerStateStore} from "../poker-state-store.service";
+import {LoggingService}  from "../../../services/logging.service";
 
 @Injectable()
 export class GameStateService
 {
+    private loggingService = new LoggingService();
+
     public constructor(private pokerStateStore: PokerStateStore)
     {
     }
@@ -54,5 +57,7 @@ export class GameStateService
             openedTicketId:      openedTicketId,
             initDone:            true
         });
+
+        this.loggingService.info("Poker state set", this.pokerStateStore.state);
     }
 }
