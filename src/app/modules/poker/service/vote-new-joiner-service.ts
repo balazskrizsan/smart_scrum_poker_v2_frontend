@@ -3,11 +3,12 @@ import {IVoteNewJoinerResponse} from "../interfaces/i-vote-new-joiner-response";
 import {PokerStateStore}        from "../poker-state-store.service";
 import {Injectable}             from "@angular/core";
 import {LoggingService}         from "../../../services/logging.service";
+import {LoggingGroup}           from "../../../services/enums/logging-group";
 
 @Injectable()
 export class VoteNewJoinerService
 {
-    private loggingService = new LoggingService();
+    private log = new LoggingService().setGroups(LoggingGroup.POKER);
 
     constructor(private pokerStateStore: PokerStateStore)
     {
@@ -18,6 +19,6 @@ export class VoteNewJoinerService
         const userProfile = body.data.userProfile;
         this.pokerStateStore.addInPokerUserProfile(userProfile);
         this.pokerStateStore.setIdsUserSession(userProfile.userId, true);
-        this.loggingService.info("New joiner", userProfile)
+        this.log.info("New joiner", userProfile)
     }
 }

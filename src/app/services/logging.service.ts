@@ -38,17 +38,19 @@ export class LoggingService
 
     private isLogWriteEnabled(level: LoggingLevel): boolean
     {
-        if (level < this.defaultLoglevel)
+        if (this.loggingGroup.length > 0)
         {
-            return false;
+            for (const group of this.loggingGroup)
+            {
+                const groupConfig = environment.loggingService.levels.groups.find(g => g.id === group);
+                if (groupConfig)
+                {
+                    return level >= groupConfig.level;
+                }
+            }
         }
 
-        if (!this.isEnabled)
-        {
-            return false;
-        }
-
-        return true;
+        return level >= this.defaultLoglevel;
     }
 
     public debug(message: string, data?: any): void

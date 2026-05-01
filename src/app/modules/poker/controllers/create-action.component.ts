@@ -14,8 +14,9 @@ import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {IStartResponse}        from "../interfaces/i-start-response";
 import {RouterNavigateService} from "../service/router-navigate-service";
 import {ISubscriptionListener} from "../interfaces/i-subscription-listener";
-import {AccountEventService}   from "../../account/service/account-event.service";
 import {CommonModule}          from "@angular/common";
+import {LoggingService}        from "../../../services/logging.service";
+import {LoggingGroup}          from "../../../services/enums/logging-group";
 
 @Component(
   {
@@ -29,6 +30,7 @@ import {CommonModule}          from "@angular/common";
 export class CreateActionComponent implements OnDestroy, OnInit
 {
     protected form: FormGroup;
+    private log = new LoggingService().setGroups(LoggingGroup.POKER)
     private createPokerListener: ISubscriptionListener<IStartResponse>;
     private hasSubmit = false;
 
@@ -88,7 +90,7 @@ export class CreateActionComponent implements OnDestroy, OnInit
         this.hasSubmit = true;
         if (this.form.valid)
         {
-            console.log(">>>> Create poker", this.form.getRawValue());
+            this.log.info("Create poker", this.form.getRawValue());
 
             this.rxStompService.publish(
               SocketDestination.RECEIVE_POKER_START,

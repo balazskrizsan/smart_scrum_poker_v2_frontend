@@ -6,7 +6,6 @@ import {provideAnimations}    from "@angular/platform-browser/animations";
 import {AppComponent}         from "./app/app.component";
 import {provideHttpClient}    from "@angular/common/http";
 import {RxStompService}      from "./app/modules/commons/services/rx-stomp-service";
-import {AccountEventService} from "./app/modules/account/service/account-event.service";
 import {HttpService}         from "./app/services/http-service";
 import {LocalStorageService}  from "./app/services/local-storage-service";
 import {FlashMessageState}    from "./app/modules/flash-message/states/flash-message-state";
@@ -60,7 +59,6 @@ bootstrapApplication(AppComponent, {
         provideHttpClient(),
         importProvidersFrom(OidcConfigModule),
         RxStompService,
-        AccountEventService,
         HttpService,
         LocalStorageService,
         FlashMessageState,

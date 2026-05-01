@@ -4,23 +4,23 @@ import {LoggingGroup}  from "../app/services/enums/logging-group";
 import {LoggingLevel}  from "../app/services/enums/logging-level";
 
 let loggingGroups: Array<ILoggingGroup> = [
-    {
-        id:    LoggingGroup.OIDC,
-        level: LoggingLevel.INFO,
-    }
+    // {
+    //     id:    LoggingGroup.POKER,
+    //     level: LoggingLevel.INFO,
+    // }
 ];
 
 export const environment = {
     production:     false,
     loggingService: {
         levels: {
-            default: LoggingLevel.INFO,
+            default: LoggingLevel.ERROR,
             groups:  loggingGroups,
         }
     },
     oidc:           {
         tokenRefreshInSeconds: 60, // 25min
-        logLevel:              LogLevel.Debug
+        logLevel:              LogLevel.Error
     },
     frontend:       {
         host: 'https://localhost.balazskrizsan.com:3010/'

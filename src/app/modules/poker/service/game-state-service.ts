@@ -3,11 +3,12 @@ import {IStdApiResponse} from "../../../interfaces/i-std-api-response";
 import {IStateResponse}  from "../interfaces/i-state-response";
 import {PokerStateStore} from "../poker-state-store.service";
 import {LoggingService}  from "../../../services/logging.service";
+import {LoggingGroup}    from "../../../services/enums/logging-group";
 
 @Injectable()
 export class GameStateService
 {
-    private loggingService = new LoggingService();
+    private log = new LoggingService().setGroups(LoggingGroup.POKER);
 
     public constructor(private pokerStateStore: PokerStateStore)
     {
@@ -38,6 +39,7 @@ export class GameStateService
         {
             throw new Error('More than 1 voting started');
         }
+
         if (possibleStartedTickets.length == 1)
         {
             activeTicketId = possibleStartedTickets.pop().id;
@@ -58,6 +60,6 @@ export class GameStateService
             initDone:            true
         });
 
-        this.loggingService.info("Poker state set", this.pokerStateStore.state);
+        this.log.info("Poker state set", this.pokerStateStore.state);
     }
 }

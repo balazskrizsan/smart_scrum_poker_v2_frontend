@@ -12,7 +12,7 @@ import {LoggingGroup}   from "../../services/enums/logging-group";
 @Injectable()
 export class PokerStateStore
 {
-    private loggingService = new LoggingService().setGroups(LoggingGroup.OIDC);
+    private log = new LoggingService().setGroups(LoggingGroup.POKER);
     private _state: IPokerState = {
         tickets:                      [],
         userProfiles:                 [],
@@ -162,8 +162,8 @@ export class PokerStateStore
             return acc;
         }, {} as Partial<IPokerState>);
 
-        this.loggingService.info('Current state values before update:', currentValues);
-        this.loggingService.info('Updated state values after update:', updates);
+        this.log.info('Current state values before update:', currentValues);
+        this.log.info('Updated state values after update:', updates);
 
         this._state = {...this._state, ...updates};
         this.stateSubject.next(this._state);
