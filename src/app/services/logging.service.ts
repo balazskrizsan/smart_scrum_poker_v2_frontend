@@ -4,19 +4,28 @@ import {LoggingLevel}  from "./enums/logging-level";
 import {EnumService}   from "./enum-service";
 import {ILoggingGroup} from "./enums/i-logging-group";
 
-// devtools usage: updateLoggingGroupLevel('POKER', 1);
-(window as any).updateLoggingGroupLevel = (groupName: string, level: number) =>
+// devtools usage: updateLoggingGroupLevel('POKER', 'DEBUG');
+(window as any).updateLoggingGroupLevel = (groupName: string, level: string) =>
 {
     const group = LoggingGroup[groupName as keyof typeof LoggingGroup];
-    if (group)
+    if (!group)
     {
-        LoggingService.setManualLoggingGroup({id: group, level});
-        console.log(`Logging enabled for ${groupName} with level ${EnumService.getEnumKey(LoggingLevel, level)}`);
+        console.error(`Unknown logging group: ${groupName}`);
+        return;
+    }
+
+    let levelValue: LoggingLevel;
+
+    levelValue = LoggingLevel[level as keyof typeof LoggingLevel];
+    if (levelValue === undefined)
+    {
+        console.error(`Unknown logging level: ${level}`);
 
         return;
     }
 
-    console.error(`Unknown logging group: ${groupName}`);
+    LoggingService.setManualLoggingGroup({id: group, level: levelValue});
+    console.log(`Logging enabled for ${groupName} with level ${EnumService.getEnumKey(LoggingLevel, levelValue)}`);
 };
 
 export class LoggingService
