@@ -16,34 +16,38 @@ export const routes: Routes = [
             {
                 path:          '',
                 loadComponent: () => import('./modules/home/actions/index-action.component')
-                  .then(m => m.IndexActionComponent)
+                  .then(m => m.IndexActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
             }
         ]
     },
     {
         path:     'poker',
-        canDeactivate: [SocketSubscriptionCleanGuard],
         canActivate: [AuthGuard],
         children: [
             {
                 path:          '',
                 loadComponent: () => import('./modules/poker/controllers/create-action.component')
-                  .then(m => m.CreateActionComponent)
+                  .then(m => m.CreateActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
             },
             {
                 path:          'create',
                 loadComponent: () => import('./modules/poker/controllers/create-action.component')
-                  .then(m => m.CreateActionComponent)
+                  .then(m => m.CreateActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
             },
             {
                 path:          'my-pokers',
                 loadComponent: () => import('./modules/poker/controllers/my-pokers-action.component')
-                  .then(m => m.MyPokersActionComponent)
+                  .then(m => m.MyPokersActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
             },
             {
                 path:          'display/:pokerPublicId',
                 loadComponent: () => import('./modules/poker/controllers/display-action.component')
-                  .then(m => m.DisplayActionComponent)
+                  .then(m => m.DisplayActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
             }
         ]
     },
