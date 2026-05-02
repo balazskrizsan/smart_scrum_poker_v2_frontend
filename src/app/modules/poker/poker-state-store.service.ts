@@ -29,8 +29,8 @@ export class PokerStateStore
         finishedTicketIds:            [],
     };
 
-    private stateSubject = new BehaviorSubject<IPokerState>(this._state);
-    private _state$ = this.stateSubject.asObservable();
+    private stateBS = new BehaviorSubject<IPokerState>(this._state);
+    private _state$ = this.stateBS.asObservable();
 
     public get state(): IPokerState
     {
@@ -166,7 +166,7 @@ export class PokerStateStore
         this.log.info('Updated state values after update:', updates);
 
         this._state = {...this._state, ...updates};
-        this.stateSubject.next(this._state);
+        this.stateBS.next(this._state);
     }
 
     public reset(): void
@@ -186,6 +186,6 @@ export class PokerStateStore
             initDone:                     false,
             finishedTicketIds:            [],
         };
-        this.stateSubject.next(this._state);
+        this.stateBS.next(this._state);
     }
 }

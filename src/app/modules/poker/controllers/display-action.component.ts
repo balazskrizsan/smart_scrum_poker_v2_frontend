@@ -1,15 +1,14 @@
 import {
     Component,
-    OnDestroy,
     OnInit
 }                              from '@angular/core';
 import {Forms}                 from '../forms';
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
 import {ActivatedRoute}        from "@angular/router";
-import {PokerStateStore}     from "../poker-state-store.service";
-import {SubscriptionService} from "../../../services/subscription-service";
-import {environment}         from '../../../../environments/environment';
+import {PokerStateStore}       from "../poker-state-store.service";
+import {SubscriptionService}   from "../../../services/subscription-service";
+import {environment}           from '../../../../environments/environment';
 import {CommonModule}          from "@angular/common";
 import {TicketHeaderComponent} from "../submodules/ticket-header.component";
 import {AddTicketComponent}    from "../submodules/add-ticket.component";
@@ -52,7 +51,7 @@ export class DisplayActionComponent implements OnInit
             pokerPublicIdFromQueryParams: this.activatedRoute.snapshot.paramMap.get('pokerPublicId')
         });
 
-        this.subscriptionService.subscribe();
+        this.subscriptionService.subscribeDisplayPoker();
     }
 
     protected copyShareLink(): void

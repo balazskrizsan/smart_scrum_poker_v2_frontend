@@ -51,6 +51,8 @@ import {NewTicketForm}             from "./app/modules/poker/submodules/forms";
 import {TicketOpenListenerFactory} from "./app/modules/poker/factories/ticket-open-listener-factory";
 import {TicketOpenService} from "./app/modules/poker/service/ticket-open-service";
 import {OidcConfigModule}  from "./app/oidc-config.module";
+import {MyPokersListenerFactory} from "./app/modules/poker/factories/my-pokers-listener-factory";
+import {MyPokersStateStore}      from "./app/modules/poker/my-pokers-state-store.service";
 
 bootstrapApplication(AppComponent, {
     providers: [
@@ -69,6 +71,7 @@ bootstrapApplication(AppComponent, {
 
         // Poker services
         AddTicketService,
+        MyPokersStateStore,
         GameStateService,
         OwnService,
         PokerTicketDeleteService,
@@ -85,6 +88,7 @@ bootstrapApplication(AppComponent, {
 
         // Poker factories
         AddTicketListenerFactory,
+        MyPokersListenerFactory,
         StateListenerFactory,
         PokerStartListenerFactory,
         PokerTicketDeleteListenerFactory,

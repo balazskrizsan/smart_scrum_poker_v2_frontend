@@ -13,6 +13,7 @@ import {ISubscriptionListener}            from "../modules/poker/interfaces/i-su
 import {RxStompService}                   from "../modules/commons/services/rx-stomp-service";
 import {AddTicketListenerFactory}         from "../modules/poker/factories/add-ticket-listener-factory";
 import {VoterLeavingFactory}              from "../modules/poker/factories/voter-leaving-factory";
+import {MyPokersListenerFactory}          from "../modules/poker/factories/my-pokers-listener-factory";
 import {SocketDestination}                from "../modules/commons/enums/socket-destination";
 import {PokerStateStore}                  from "../modules/poker/poker-state-store.service";
 import {IdsUserService}                   from "./ids-user-service";
@@ -37,12 +38,13 @@ export class SubscriptionService
       private ticketOpenListenerFactory: TicketOpenListenerFactory,
       private ticketDeleteListenerFactory: PokerTicketDeleteListenerFactory,
       private addTicketListenerFactory: AddTicketListenerFactory,
-      private voterLeavingFactory: VoterLeavingFactory
+      private voterLeavingFactory: VoterLeavingFactory,
+      private myPokersListenerFactory: MyPokersListenerFactory,
     )
     {
     }
 
-    public subscribe()
+    public subscribeDisplayPoker()
     {
         this.listeners.push(this.gameStateListenerFactory.create());
         this.listeners.push(this.pokerStartListenerFactory.create());
@@ -56,6 +58,11 @@ export class SubscriptionService
         this.listeners.push(this.ticketDeleteListenerFactory.create());
         this.listeners.push(this.addTicketListenerFactory.create());
         this.listeners.push(this.voterLeavingFactory.create());
+    }
+
+    public subscribeMyPokers()
+    {
+        this.listeners.push(this.myPokersListenerFactory.create());
     }
 
     public unsubscribe()
