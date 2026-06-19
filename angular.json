@@ -50,24 +50,9 @@
             "allowedCommonJsDependencies": ["jquery", "bootstrap", "lodash"]
           },
           "configurations": {
-            "prod": {
-              "fileReplacements": [
-                { "replace": "src/environments/environment.ts", "with": "src/environments/environment.prod.ts" }
-              ]
-            },
-            "local_prod": {
+            "local": {
               "fileReplacements": [
                 { "replace": "src/environments/environment.ts", "with": "src/environments/environment.local_prod.ts" }
-              ]
-            },
-            "latest": {
-              "fileReplacements": [
-                { "replace": "src/environments/environment.ts", "with": "src/environments/environment.latest.ts" }
-              ]
-            },
-            "uat": {
-              "fileReplacements": [
-                { "replace": "src/environments/environment.ts", "with": "src/environments/environment.uat.ts" }
               ]
             }
           }
