@@ -18,21 +18,21 @@ export const environment = {
         }
     },
     oidc:           {
-        tokenRefreshInSeconds: 60, // 25min
-        logLevel:              LogLevel.Error
+        tokenRefreshInSeconds: 1500, // 25min
+        logLevel:              LogLevel.Debug
     },
     frontend:       {
-        host: 'https://localhost.balazskrizsan.com:3010/'
+        host: 'https://smartscrumpoker.localhost.balazskrizsan.com/'
     },
     backend:        {
         api:     {
-            host: 'https://localhost.balazskrizsan.com:3000/'
+            host: 'https://api--smartscrumpoker.localhost.balazskrizsan.com/'
         },
         wss_api: {
-            host: 'wss://localhost.balazskrizsan.com:3000/ws'
+            host: 'wss://api--smartscrumpoker.localhost.balazskrizsan.com/ws'
         }
     },
     ids:            {
-        host: 'https://localhost.balazskrizsan.com:4040/'
+        host: 'https://ids--smart-scrum-poker.localhost.balazskrizsan.com/'
     }
 };

@@ -11,7 +11,7 @@ import {IdsUserService}     from "./services/ids-user-service";
     imports:   [
         AuthModule.forRoot({
             config: {
-                authority:             'https://localhost:4040',
+                authority:             environment.ids.host,
                 clientId:              'smart_scrum_poker_frontend',
                 redirectUrl:           window.location.origin + '/auth-callback',
                 postLogoutRedirectUri: window.location.origin,
