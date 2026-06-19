@@ -33,6 +33,6 @@ export const environment = {
         }
     },
     ids:            {
-        host: 'https://ids--smart-scrum-poker.localhost.balazskrizsan.com/'
+        host: 'https://ids--smart-scrum-poker.localhost.balazskrizsan.com'
     }
 };
