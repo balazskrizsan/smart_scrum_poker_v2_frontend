@@ -32,7 +32,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: kbalazsworks/smart_scrum_poker_frontend
+          images: kbalazsworks/smart_scrum_poker_v2_frontend
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -49,4 +49,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: kbalazsworks/smart_scrum_poker_frontend:latest_local, kbalazsworks/smart_scrum_poker_frontend:local_commit_sha_short_${{ env.COMMIT_SHA_SHORT }}
+          tags: kbalazsworks/smart_scrum_poker_v2_frontend:latest_local, kbalazsworks/smart_scrum_poker_v2_frontend:local_commit_sha_short_${{ env.COMMIT_SHA_SHORT }}
