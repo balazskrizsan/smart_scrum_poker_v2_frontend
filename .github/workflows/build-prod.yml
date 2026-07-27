@@ -1,4 +1,4 @@
-name: "master/local"
+name: "master/prod"
 
 on:
   push:
