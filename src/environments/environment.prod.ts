@@ -33,6 +33,6 @@ export const environment = {
         }
     },
     ids:            {
-        host: 'https://identity-service.smartscrumpoker.com/'
+        host: 'https://identity-service.smartscrumpoker.com'
     }
 };
