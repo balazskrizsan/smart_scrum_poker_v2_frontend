@@ -1,4 +1,5 @@
-import {Component}           from '@angular/core';
+import {Component, OnInit}   from '@angular/core';
+import {Title}                 from "@angular/platform-browser";
 import {Forms}               from '../forms';
 import {FormGroup}           from "@angular/forms";
 import {UrlService}          from "../../commons/services/url-service";
@@ -19,8 +20,9 @@ import {RxStompService}      from "../../commons/services/rx-stomp-service";
       providers:   [Forms],
   }
 )
-export class MyPokersActionComponent
+export class MyPokersActionComponent implements OnInit
 {
+    public pageTitle = 'My Pokers - Smart Scrum Poker';
     protected urlService = UrlService;
     protected form: FormGroup;
     protected myPokers$ = this.myPokersState.state$;
@@ -31,11 +33,17 @@ export class MyPokersActionComponent
       private myPokersState: MyPokersStateStore,
       private idsUserService: IdsUserService,
       private rxStompService: RxStompService,
+      private titleService: Title
     )
     {
         this.subscriptionService.subscribeMyPokers();
 
         let sub = this.idsUserService.subOrRedirectToLogin;
         this.rxStompService.publish(SocketDestination.POKER__MY_POKERS, {idsUserId: sub});
+    }
+
+    public ngOnInit(): void
+    {
+        this.titleService.setTitle(this.pageTitle);
     }
 }

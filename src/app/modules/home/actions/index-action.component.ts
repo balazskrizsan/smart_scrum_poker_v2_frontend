@@ -1,4 +1,5 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {Title} from "@angular/platform-browser";
 
 @Component(
   {
@@ -8,9 +9,18 @@ import {Component} from "@angular/core";
       providers:   [],
   }
 )
-export class IndexActionComponent
+export class IndexActionComponent implements OnInit
 {
-    constructor()
+    public pageTitle = 'Home - Smart Scrum Poker';
+
+    public constructor(
+      private titleService: Title
+    )
     {
+    }
+
+    public ngOnInit(): void
+    {
+        this.titleService.setTitle(this.pageTitle);
     }
 }

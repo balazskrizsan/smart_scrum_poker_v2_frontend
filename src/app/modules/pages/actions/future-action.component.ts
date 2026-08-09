@@ -1,13 +1,23 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {Title} from "@angular/platform-browser";
 
 @Component(
   {
       templateUrl: '../views/future.html',
   }
 )
-export class FutureActionComponent
+export class FutureActionComponent implements OnInit
 {
-    constructor()
+    public pageTitle = 'Future - Smart Scrum Poker';
+
+    public constructor(
+      private titleService: Title
+    )
     {
+    }
+
+    public ngOnInit(): void
+    {
+        this.titleService.setTitle(this.pageTitle);
     }
 }

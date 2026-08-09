@@ -2,6 +2,7 @@ import {
     Component,
     OnInit
 }                              from '@angular/core';
+import {Title}                 from "@angular/platform-browser";
 import {Forms}                 from '../forms';
 import {RxStompService}        from "../../commons/services/rx-stomp-service";
 import {SocketDestination}     from "../../commons/enums/socket-destination";
@@ -35,6 +36,7 @@ import {FlashMessageLevelEnum} from "../../flash-message/enums/flash-message-lev
 })
 export class DisplayActionComponent implements OnInit
 {
+    public pageTitle = 'Display Poker - Smart Scrum Poker';
     protected state$ = this.pokerStateStore.state$;
     protected appHost = environment.frontend.host;
 
@@ -45,6 +47,7 @@ export class DisplayActionComponent implements OnInit
       public idsUserService: IdsUserService,
       private subscriptionService: SubscriptionService,
       private flashMessageService: FlashMessageService,
+      private titleService: Title
     )
     {
         this.pokerStateStore.updateState({
@@ -75,6 +78,7 @@ export class DisplayActionComponent implements OnInit
 
     async ngOnInit(): Promise<void>
     {
+        this.titleService.setTitle(this.pageTitle);
         // @todo: redirect if not logged in
 
         const currentState = this.pokerStateStore.state;

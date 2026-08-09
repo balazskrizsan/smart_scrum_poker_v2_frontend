@@ -3,6 +3,7 @@ import {
     OnDestroy,
     OnInit
 }                              from '@angular/core';
+import {Title}                 from "@angular/platform-browser";
 import {Forms}                 from '../forms';
 import {
     FormArray,
@@ -29,6 +30,7 @@ import {LoggingGroup}          from "../../../services/enums/logging-group";
 )
 export class CreateActionComponent implements OnDestroy, OnInit
 {
+    public pageTitle = 'Create Poker - Smart Scrum Poker';
     protected form: FormGroup;
     private log = new LoggingService().setGroups(LoggingGroup.POKER)
     private createPokerListener: ISubscriptionListener<IStartResponse>;
@@ -38,6 +40,7 @@ export class CreateActionComponent implements OnDestroy, OnInit
       protected forms: Forms,
       private rxStompService: RxStompService,
       private routerNavigateService: RouterNavigateService,
+      private titleService: Title
     )
     {
         this.form = this.forms.createCruForm();
@@ -52,6 +55,7 @@ export class CreateActionComponent implements OnDestroy, OnInit
 
     ngOnInit(): void
     {
+        this.titleService.setTitle(this.pageTitle);
         // @todo: redirect if not logged in
         this.addTicketNameField();
     }

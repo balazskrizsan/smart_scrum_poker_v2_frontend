@@ -1,13 +1,23 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {Title} from "@angular/platform-browser";
 
 @Component(
   {
       templateUrl: '../views/poker.html',
   }
 )
-export class PokerActionComponent
+export class PokerActionComponent implements OnInit
 {
-    constructor()
+    public pageTitle = 'Poker - Smart Scrum Poker';
+
+    public constructor(
+      private titleService: Title
+    )
     {
+    }
+
+    public ngOnInit(): void
+    {
+        this.titleService.setTitle(this.pageTitle);
     }
 }
