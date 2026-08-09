@@ -33,6 +33,6 @@ export const environment = {
         }
     },
     ids:            {
-        host: 'https://localhost.balazskrizsan.com:4040/'
+        host: 'https://localhost.balazskrizsan.com:4040'
     }
 };
