@@ -21,38 +21,26 @@
                 to effort estimation.
               </p>
               <p>Each team member casts a vote based on <strong>three distinct dimensions</strong>:</p>
-              <ol class="widget w-playlist without-cover">
-                <li>
-                  <svg class="olymp-music-play-icon-big" style="width: 16px; margin: 0 5px;">
+              <ul style="list-style: none; padding-left: 0;">
+                <li style="margin-bottom: 20px; display: flex; align-items: flex-start;">
+                  <svg class="olymp-music-play-icon-big" style="width: 16px; margin-right: 10px; flex-shrink: 0; margin-top: 2px;">
                     <use xlink:href="#olymp-music-play-icon-big"></use>
                   </svg>
-                  <p class="composition">
-                    <strong>Uncertainty</strong><br>
-                    How unclear is the task?<br>
-                    Ranges from 1 (clear) to 3 (very unclear).
-                  </p>
+                  <span><strong>Uncertainty:</strong> How unclear is the task? Ranges from 1 (clear) to 3 (very unclear).</span>
                 </li>
-                <li>
-                  <svg class="olymp-music-play-icon-big" style="width: 16px; margin: 0 5px;">
+                <li style="margin-bottom: 20px; display: flex; align-items: flex-start;">
+                  <svg class="olymp-music-play-icon-big" style="width: 16px; margin-right: 10px; flex-shrink: 0; margin-top: 2px;">
                     <use xlink:href="#olymp-music-play-icon-big"></use>
                   </svg>
-                  <p class="composition">
-                    <strong>Complexity</strong><br>
-                    Captures the technical or logical difficulty of the task.<br>
-                    Rated from 1 (simple) to 3 (highly complex).
-                  </p>
+                  <span><strong>Complexity:</strong> Captures the technical or logical difficulty of the task. Rated from 1 (simple) to 3 (highly complex).</span>
                 </li>
-                <li>
-                  <svg class="olymp-music-play-icon-big" style="width: 16px; margin: 0 5px;">
+                <li style="margin-bottom: 20px; display: flex; align-items: flex-start;">
+                  <svg class="olymp-music-play-icon-big" style="width: 16px; margin-right: 10px; flex-shrink: 0; margin-top: 2px;">
                     <use xlink:href="#olymp-music-play-icon-big"></use>
                   </svg>
-                  <p class="composition">
-                    <strong>Effort</strong><br>
-                    Estimates the amount of work needed to complete the task.<br>
-                    Rated from 1 (low) to 3 (high).
-                  </p>
+                  <span><strong>Effort:</strong> Estimates the amount of work needed to complete the task. Rated from 1 (low) to 3 (high).</span>
                 </li>
-              </ol>
+              </ul>
               <p>
                 These three values are combined using a predefined logic to calculate a story point score that reflects
                 the estimated size of the work item. This mapping ensures that estimates are consistent,
@@ -93,160 +81,160 @@
                 <li><strong>Faster convergence</strong>: Teams reach consensus quicker with less deba</li>
               </ul>
 
-              <h3>Raw table</h3>
-              <table border="1" cellspacing="0" cellpadding="6">
+              <h3>Scoring Matrix</h3>
+              <table class="event-item-table event-item-table-fixed-width">
                 <thead>
                 <tr>
-                  <th>Uncertainty</th>
-                  <th>Complexity</th>
-                  <th>Effort</th>
-                  <th>Story Points</th>
+                  <th class="author">Uncertainty</th>
+                  <th class="location">Complexity</th>
+                  <th class="upcoming">Effort</th>
+                  <th class="description">Story Points</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>1</td>
-                  <td><strong>1</strong></td>
+                <tr class="event-item">
+                  <td class="author">1</td>
+                  <td class="location">1</td>
+                  <td class="upcoming">1</td>
+                  <td class="description"><strong>1</strong></td>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td><strong>2</strong></td>
+                <tr class="event-item">
+                  <td class="author">1</td>
+                  <td class="location">1</td>
+                  <td class="upcoming">2</td>
+                  <td class="description"><strong>2</strong></td>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>3</td>
-                  <td><strong>5</strong></td>
-                </tr>
-
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td><strong>2</strong></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>2</td>
-                  <td><strong>3</strong></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td><strong>5</strong></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>3</td>
-                  <td>1</td>
-                  <td><strong>3</strong></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td><strong>5</strong></td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>3</td>
-                  <td>3</td>
-                  <td><strong>8</strong></td>
+                <tr class="event-item">
+                  <td class="author">1</td>
+                  <td class="location">1</td>
+                  <td class="upcoming">3</td>
+                  <td class="description"><strong>5</strong></td>
                 </tr>
 
-                <tr>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>1</td>
-                  <td><strong>3</strong></td>
+                <tr class="event-item">
+                  <td class="author">1</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">1</td>
+                  <td class="description"><strong>2</strong></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>2</td>
-                  <td><strong>5</strong></td>
+                <tr class="event-item">
+                  <td class="author">1</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">2</td>
+                  <td class="description"><strong>3</strong></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>3</td>
-                  <td><strong>8</strong></td>
+                <tr class="event-item">
+                  <td class="author">1</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">3</td>
+                  <td class="description"><strong>5</strong></td>
                 </tr>
-
-                <tr>
-                  <td>2</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td><strong>5</strong></td>
+                <tr class="event-item">
+                  <td class="author">1</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">1</td>
+                  <td class="description"><strong>3</strong></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>2</td>
-                  <td>2</td>
-                  <td><strong>5</strong></td>
+                <tr class="event-item">
+                  <td class="author">1</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">2</td>
+                  <td class="description"><strong>5</strong></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td><strong>8</strong></td>
-                </tr>
-
-                <tr>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>1</td>
-                  <td><strong>5</strong></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td><strong>8</strong></td>
+                <tr class="event-item">
+                  <td class="author">1</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">3</td>
+                  <td class="description"><strong>8</strong></td>
                 </tr>
 
-                <tr>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td><strong>8</strong></td>
+                <tr class="event-item">
+                  <td class="author">2</td>
+                  <td class="location">1</td>
+                  <td class="upcoming">1</td>
+                  <td class="description"><strong>3</strong></td>
                 </tr>
-                <tr>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>2</td>
-                  <td><strong>8</strong></td>
+                <tr class="event-item">
+                  <td class="author">2</td>
+                  <td class="location">1</td>
+                  <td class="upcoming">2</td>
+                  <td class="description"><strong>5</strong></td>
                 </tr>
-                <tr>
-                  <td>3</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td><strong>13</strong></td>
+                <tr class="event-item">
+                  <td class="author">2</td>
+                  <td class="location">1</td>
+                  <td class="upcoming">3</td>
+                  <td class="description"><strong>8</strong></td>
                 </tr>
 
-                <tr>
-                  <td>3</td>
-                  <td>3</td>
-                  <td>1</td>
-                  <td><strong>8</strong></td>
+                <tr class="event-item">
+                  <td class="author">2</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">1</td>
+                  <td class="description"><strong>5</strong></td>
                 </tr>
-                <tr>
-                  <td>3</td>
-                  <td>3</td>
-                  <td>2</td>
-                  <td><strong>13</strong></td>
+                <tr class="event-item">
+                  <td class="author">2</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">2</td>
+                  <td class="description"><strong>5</strong></td>
                 </tr>
-                <tr>
-                  <td>3</td>
-                  <td>3</td>
-                  <td>3</td>
-                  <td><strong>13</strong></td>
+                <tr class="event-item">
+                  <td class="author">2</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">3</td>
+                  <td class="description"><strong>8</strong></td>
+                </tr>
+
+                <tr class="event-item">
+                  <td class="author">2</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">1</td>
+                  <td class="description"><strong>5</strong></td>
+                </tr>
+                <tr class="event-item">
+                  <td class="author">2</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">2</td>
+                  <td class="description"><strong>8</strong></td>
+                </tr>
+
+                <tr class="event-item">
+                  <td class="author">3</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">1</td>
+                  <td class="description"><strong>8</strong></td>
+                </tr>
+                <tr class="event-item">
+                  <td class="author">3</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">2</td>
+                  <td class="description"><strong>8</strong></td>
+                </tr>
+                <tr class="event-item">
+                  <td class="author">3</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">3</td>
+                  <td class="description"><strong>13</strong></td>
+                </tr>
+
+                <tr class="event-item">
+                  <td class="author">3</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">1</td>
+                  <td class="description"><strong>8</strong></td>
+                </tr>
+                <tr class="event-item">
+                  <td class="author">3</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">2</td>
+                  <td class="description"><strong>13</strong></td>
+                </tr>
+                <tr class="event-item">
+                  <td class="author">3</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">3</td>
+                  <td class="description"><strong>13</strong></td>
                 </tr>
                 </tbody>
               </table>

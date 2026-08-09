@@ -51,4 +51,40 @@ export const routes: Routes = [
             }
         ]
     },
+    {
+        path:     'pages',
+        canDeactivate: [SocketSubscriptionCleanGuard],
+        children: [
+            {
+                path:          'roadmap',
+                loadComponent: () => import('./modules/pages/actions/roadmap-action.component')
+                  .then(m => m.RoadmapActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
+            },
+            {
+                path:          'contact',
+                loadComponent: () => import('./modules/pages/actions/contact-action.component')
+                  .then(m => m.ContactActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
+            },
+            {
+                path:          'faq',
+                loadComponent: () => import('./modules/pages/actions/faq-action.component')
+                  .then(m => m.FaqActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
+            },
+            {
+                path:          'poker',
+                loadComponent: () => import('./modules/pages/actions/poker-action.component')
+                  .then(m => m.PokerActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
+            },
+            {
+                path:          'future',
+                loadComponent: () => import('./modules/pages/actions/future-action.component')
+                  .then(m => m.FutureActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
+            }
+        ]
+    },
 ];
