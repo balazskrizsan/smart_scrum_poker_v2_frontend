@@ -5,7 +5,7 @@ import {Title} from "@angular/platform-browser";
   {
       templateUrl: '../views/home.html',
       standalone: true,
-      styleUrls:   ['./../styles/home.scss'],
+      styleUrls:   ['./../styles/home.scss', './../views/home.css'],
       providers:   [],
   }
 )
