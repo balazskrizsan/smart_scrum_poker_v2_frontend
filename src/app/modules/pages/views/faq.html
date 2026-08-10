@@ -20,29 +20,35 @@
                 <strong>Smart Scrum Poker</strong> introduces a more structured, transparent, and intelligent approach
                 to effort estimation.
               </p>
-              <p>Each team member casts a vote based on <strong>three distinct dimensions</strong>:</p>
+              <p>Each team member casts a vote based on <strong>four distinct dimensions</strong>:</p>
               <ul style="list-style: none; padding-left: 0;">
                 <li style="margin-bottom: 20px; display: flex; align-items: flex-start;">
                   <svg class="olymp-music-play-icon-big" style="width: 16px; margin-right: 10px; flex-shrink: 0; margin-top: 2px;">
                     <use xlink:href="#olymp-music-play-icon-big"></use>
                   </svg>
-                  <span><strong>Uncertainty:</strong> How unclear is the task? Ranges from 1 (clear) to 3 (very unclear).</span>
+                  <span><strong>Uncertainty:</strong> How unclear is the task? Ranges from 1 (S - clear) to 4 (XXL - very unclear).</span>
                 </li>
                 <li style="margin-bottom: 20px; display: flex; align-items: flex-start;">
                   <svg class="olymp-music-play-icon-big" style="width: 16px; margin-right: 10px; flex-shrink: 0; margin-top: 2px;">
                     <use xlink:href="#olymp-music-play-icon-big"></use>
                   </svg>
-                  <span><strong>Complexity:</strong> Captures the technical or logical difficulty of the task. Rated from 1 (simple) to 3 (highly complex).</span>
+                  <span><strong>Complexity:</strong> Captures the technical or logical difficulty of the task. Rated from 1 (S - simple) to 4 (XXL - highly complex).</span>
                 </li>
                 <li style="margin-bottom: 20px; display: flex; align-items: flex-start;">
                   <svg class="olymp-music-play-icon-big" style="width: 16px; margin-right: 10px; flex-shrink: 0; margin-top: 2px;">
                     <use xlink:href="#olymp-music-play-icon-big"></use>
                   </svg>
-                  <span><strong>Effort:</strong> Estimates the amount of work needed to complete the task. Rated from 1 (low) to 3 (high).</span>
+                  <span><strong>Effort:</strong> Estimates the amount of work needed to complete the task. Rated from 1 (S - low) to 4 (XXL - very high).</span>
+                </li>
+                <li style="margin-bottom: 20px; display: flex; align-items: flex-start;">
+                  <svg class="olymp-music-play-icon-big" style="width: 16px; margin-right: 10px; flex-shrink: 0; margin-top: 2px;">
+                    <use xlink:href="#olymp-music-play-icon-big"></use>
+                  </svg>
+                  <span><strong>Risk:</strong> Assesses the potential impact of failure or dependencies. Rated from 1 (S - low risk) to 4 (XXL - high risk).</span>
                 </li>
               </ul>
               <p>
-                These three values are combined using a predefined logic to calculate a story point score that reflects
+                These four values are combined using a predefined logic to calculate a story point score that reflects
                 the estimated size of the work item. This mapping ensures that estimates are consistent,
                 multi-dimensional, and less biased by individual voting patterns.
               </p>
@@ -65,8 +71,8 @@
             <div class="post-content">
               <p>
                 The Smart Scrum Poker scoring system translates team input into consistent story point values.
-                Each estimate is based on three dimensions: <strong>Uncertainty, Complexity, and Effort</strong>
-                — each rated from 1 to 3. These values are combined using a predefined logic that maps them to standard
+                Each estimate is based on four dimensions: <strong>Uncertainty, Complexity, Effort, and Risk</strong>
+                — each rated from 1 to 4 (S/M/L/XXL). These values are combined using a predefined logic that maps them to standard
                 Fibonacci-style storypoints. This method reduces bias, avoids arbitrary number guessing, and promotes
                 shared understanding. The result is a transparent, structured estimation process that teams can trust
                 and align around.
@@ -78,16 +84,19 @@
                 <li>
                   <strong>AI-ready</strong>: The model-friendly data structure supports analysis and auto-suggestions.
                 </li>
-                <li><strong>Faster convergence</strong>: Teams reach consensus quicker with less deba</li>
+                <li><strong>Faster convergence</strong>: Teams reach consensus quicker with less debate</li>
               </ul>
 
               <h3>Scoring Matrix</h3>
+              <p><em>The story points are calculated based on the sum of all four dimensions (Uncertainty + Complexity + Effort + Risk). Each dimension ranges from 1 (S) to 4 (XXL), with higher values available for extreme cases.</em></p>
               <table class="event-item-table event-item-table-fixed-width">
                 <thead>
                 <tr>
                   <th class="author">Uncertainty</th>
                   <th class="location">Complexity</th>
                   <th class="upcoming">Effort</th>
+                  <th class="description">Risk</th>
+                  <th class="description">Sum</th>
                   <th class="description">Story Points</th>
                 </tr>
                 </thead>
@@ -96,145 +105,89 @@
                   <td class="author">1</td>
                   <td class="location">1</td>
                   <td class="upcoming">1</td>
+                  <td class="description">1</td>
+                  <td class="description">4</td>
                   <td class="description"><strong>1</strong></td>
                 </tr>
                 <tr class="event-item">
                   <td class="author">1</td>
                   <td class="location">1</td>
-                  <td class="upcoming">2</td>
+                  <td class="upcoming">1</td>
+                  <td class="description">2</td>
+                  <td class="description">5</td>
                   <td class="description"><strong>2</strong></td>
                 </tr>
                 <tr class="event-item">
                   <td class="author">1</td>
                   <td class="location">1</td>
-                  <td class="upcoming">3</td>
-                  <td class="description"><strong>5</strong></td>
-                </tr>
-
-                <tr class="event-item">
-                  <td class="author">1</td>
-                  <td class="location">2</td>
-                  <td class="upcoming">1</td>
-                  <td class="description"><strong>2</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">1</td>
-                  <td class="location">2</td>
                   <td class="upcoming">2</td>
+                  <td class="description">2</td>
+                  <td class="description">6</td>
                   <td class="description"><strong>3</strong></td>
                 </tr>
                 <tr class="event-item">
                   <td class="author">1</td>
                   <td class="location">2</td>
-                  <td class="upcoming">3</td>
-                  <td class="description"><strong>5</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">1</td>
-                  <td class="location">3</td>
-                  <td class="upcoming">1</td>
-                  <td class="description"><strong>3</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">1</td>
-                  <td class="location">3</td>
                   <td class="upcoming">2</td>
-                  <td class="description"><strong>5</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">1</td>
-                  <td class="location">3</td>
-                  <td class="upcoming">3</td>
-                  <td class="description"><strong>8</strong></td>
-                </tr>
-
-                <tr class="event-item">
-                  <td class="author">2</td>
-                  <td class="location">1</td>
-                  <td class="upcoming">1</td>
+                  <td class="description">2</td>
+                  <td class="description">7</td>
                   <td class="description"><strong>3</strong></td>
                 </tr>
                 <tr class="event-item">
                   <td class="author">2</td>
-                  <td class="location">1</td>
+                  <td class="location">2</td>
                   <td class="upcoming">2</td>
+                  <td class="description">2</td>
+                  <td class="description">8</td>
                   <td class="description"><strong>5</strong></td>
                 </tr>
                 <tr class="event-item">
                   <td class="author">2</td>
-                  <td class="location">1</td>
+                  <td class="location">2</td>
+                  <td class="upcoming">2</td>
+                  <td class="description">3</td>
+                  <td class="description">9</td>
+                  <td class="description"><strong>5</strong></td>
+                </tr>
+                <tr class="event-item">
+                  <td class="author">2</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">2</td>
+                  <td class="description">3</td>
+                  <td class="description">10</td>
+                  <td class="description"><strong>8</strong></td>
+                </tr>
+                <tr class="event-item">
+                  <td class="author">3</td>
+                  <td class="location">3</td>
+                  <td class="upcoming">2</td>
+                  <td class="description">3</td>
+                  <td class="description">11</td>
+                  <td class="description"><strong>8</strong></td>
+                </tr>
+                <tr class="event-item">
+                  <td class="author">3</td>
+                  <td class="location">3</td>
                   <td class="upcoming">3</td>
-                  <td class="description"><strong>8</strong></td>
-                </tr>
-
-                <tr class="event-item">
-                  <td class="author">2</td>
-                  <td class="location">2</td>
-                  <td class="upcoming">1</td>
-                  <td class="description"><strong>5</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">2</td>
-                  <td class="location">2</td>
-                  <td class="upcoming">2</td>
-                  <td class="description"><strong>5</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">2</td>
-                  <td class="location">2</td>
-                  <td class="upcoming">3</td>
-                  <td class="description"><strong>8</strong></td>
-                </tr>
-
-                <tr class="event-item">
-                  <td class="author">2</td>
-                  <td class="location">3</td>
-                  <td class="upcoming">1</td>
-                  <td class="description"><strong>5</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">2</td>
-                  <td class="location">3</td>
-                  <td class="upcoming">2</td>
-                  <td class="description"><strong>8</strong></td>
-                </tr>
-
-                <tr class="event-item">
-                  <td class="author">3</td>
-                  <td class="location">2</td>
-                  <td class="upcoming">1</td>
-                  <td class="description"><strong>8</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">3</td>
-                  <td class="location">2</td>
-                  <td class="upcoming">2</td>
-                  <td class="description"><strong>8</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">3</td>
-                  <td class="location">2</td>
-                  <td class="upcoming">3</td>
-                  <td class="description"><strong>13</strong></td>
-                </tr>
-
-                <tr class="event-item">
-                  <td class="author">3</td>
-                  <td class="location">3</td>
-                  <td class="upcoming">1</td>
-                  <td class="description"><strong>8</strong></td>
-                </tr>
-                <tr class="event-item">
-                  <td class="author">3</td>
-                  <td class="location">3</td>
-                  <td class="upcoming">2</td>
+                  <td class="description">3</td>
+                  <td class="description">12</td>
                   <td class="description"><strong>13</strong></td>
                 </tr>
                 <tr class="event-item">
                   <td class="author">3</td>
                   <td class="location">3</td>
                   <td class="upcoming">3</td>
-                  <td class="description"><strong>13</strong></td>
+                  <td class="description">4</td>
+                  <td class="description">13</td>
+                  <td class="description"><strong>20</strong></td>
+                </tr>
+                <tr class="event-item">
+                  <td class="author">4</td>
+                  <td class="location">4</td>
+                  <td class="upcoming">4</td>
+                  <td class="description">4</td>
+                  <td class="description">16</td>
+                  <td class="description"><strong>20</strong></td>
                 </tr>
                 </tbody>
               </table>
@@ -256,12 +209,12 @@
             <div class="post-content">
               <p>
                 Smart Scrum Poker offers software development teams a structured and objective approach to estimation.
-                Instead of relying on vague intuition or arbitrary numbers, teams evaluate work based on three clearly
-                defined factors: <strong>uncertainty, complexity, and effort</strong>. This method brings clarity to
+                Instead of relying on vague intuition or arbitrary numbers, teams evaluate work based on four clearly
+                defined factors: <strong>uncertainty, complexity, effort, and risk</strong>. This method brings clarity to
                 discussions, helping teams avoid common pitfalls like underestimation, overconfidence, or dominant
-                voices skewing the outcome. By separating what is unclear from what is hard and what is time-consuming,
-                developers can have more focused and constructive conversations. It reduces ambiguity and encourages
-                shared understanding across the team.
+                voices skewing the outcome. By separating what is unclear from what is hard, what is time-consuming, and
+                what carries risk, developers can have more focused and constructive conversations. It reduces ambiguity
+                and encourages shared understanding across the team.
               </p>
               <p>
                 For example, a task might be low in complexity but high in uncertainty—something traditional planning
@@ -304,12 +257,12 @@
                 struggle with vague estimations or inconsistent point assignment.
               </p>
               <p>
-                The app works best in environments where tasks vary in <strong>uncertainty, complexity, and
-                effort</strong>, making it a natural choice for developers, QA teams, DevOps engineers, product
+                The app works best in environments where tasks vary in <strong>uncertainty, complexity, effort, and
+                risk</strong>, making it a natural choice for developers, QA teams, DevOps engineers, product
                 managers, and even technical design squads. It suits any context where teams need to balance what they
-                know, how hard something is, and how much work it will actually take. Agile squads in startups,
-                cross-functional teams in corporations, ordistributed development groups will all benefit from the
-                shared language and clarity it brings.
+                know, how hard something is, how much work it will actually take, and what risks are involved. Agile
+                squads in startups, cross-functional teams in corporations, or distributed development groups will all
+                benefit from the shared language and clarity it brings.
               </p>
               <p>
                 Even outside pure software development, any group that relies on structured estimation—like UX teams,
@@ -338,7 +291,7 @@
                 Smart Scrum Poker is made for <strong>planning sessions</strong> where teams need quick, structured
                 estimations without wasting time on endless debate. It’s most effective during <strong>sprint planning,
                 backlog refinement</strong>, or anytime you need to assign story points collaboratively. When
-                uncertainty, complexity, and effort all come into play—and you want everyone aligned—this tool keeps
+                uncertainty, complexity, effort, and risk all come into play—and you want everyone aligned—this tool keeps
                 things objective, fast, and frustration-free.
               </p>
             </div>

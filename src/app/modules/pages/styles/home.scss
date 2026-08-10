@@ -58,3 +58,14 @@ img.third-img1 {
 .animated-text span:nth-child(6) { animation-delay: 0.10s; }
 .animated-text span:nth-child(7) { animation-delay: 0.12s; }
 .animated-text span:nth-child(8) { animation-delay: 0.14s; }
+
+// FAQ table vertical borders
+.event-item-table-fixed-width {
+  border-collapse: collapse;
+
+  td:nth-child(5),
+  th:nth-child(5) {
+    border-left: 1px solid #e6e6f0;
+    border-right: 1px solid #e6e6f0;
+  }
+}

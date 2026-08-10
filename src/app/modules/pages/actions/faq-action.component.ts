@@ -4,6 +4,7 @@ import {Title} from "@angular/platform-browser";
 @Component(
   {
       templateUrl: '../views/faq.html',
+      styleUrls: ['../styles/home.scss'],
   }
 )
 export class FaqActionComponent implements OnInit
