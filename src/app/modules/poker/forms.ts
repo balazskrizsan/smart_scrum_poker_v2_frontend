@@ -57,7 +57,6 @@ export class Forms {
   newSizeConfig(): FormGroup {
     return new FormGroup({
       name: new FormControl('', [Validators.required]),
-      value: new FormControl(1, [Validators.required, Validators.min(1)]),
     });
   }
 
@@ -65,7 +64,8 @@ export class Forms {
     const sizeValues = new FormArray([]);
     for (const size of sizeConfig) {
       sizeValues.push(new FormGroup({
-        value: new FormControl(size.value),
+        name: new FormControl(size.name),
+        value: new FormControl(1, [Validators.required, Validators.min(1)]),
       }));
     }
     return new FormGroup({
