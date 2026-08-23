@@ -38,4 +38,7 @@ export enum SocketDestination
 
     SEND__POKER__VOTER_LEAVING = '/app/poker/voter_leaving',
     RECEIVE__POKER__VOTER_LEAVING = '/app/poker/voter_leaving',
+
+    SEND_POKER_CONFIG_CREATE = '/app/poker/config/create',
+    RECEIVE_POKER_CONFIG_CREATE = '/app/poker/config/create',
 }

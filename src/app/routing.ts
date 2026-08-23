@@ -23,30 +23,39 @@ export const routes: Routes = [
     },
     {
         path:     'poker',
-        canActivate: [AuthGuard],
         children: [
             {
                 path:          '',
+                canActivate: [AuthGuard],
                 loadComponent: () => import('./modules/poker/controllers/create-action.component')
                   .then(m => m.CreateActionComponent),
                 canDeactivate: [SocketSubscriptionCleanGuard],
             },
             {
                 path:          'create',
+                canActivate: [AuthGuard],
                 loadComponent: () => import('./modules/poker/controllers/create-action.component')
                   .then(m => m.CreateActionComponent),
                 canDeactivate: [SocketSubscriptionCleanGuard],
             },
             {
                 path:          'my-pokers',
+                canActivate: [AuthGuard],
                 loadComponent: () => import('./modules/poker/controllers/my-pokers-action.component')
                   .then(m => m.MyPokersActionComponent),
                 canDeactivate: [SocketSubscriptionCleanGuard],
             },
             {
                 path:          'display/:pokerPublicId',
+                canActivate: [AuthGuard],
                 loadComponent: () => import('./modules/poker/controllers/display-action.component')
                   .then(m => m.DisplayActionComponent),
+                canDeactivate: [SocketSubscriptionCleanGuard],
+            },
+            {
+                path:          'config',
+                loadComponent: () => import('./modules/poker/controllers/config-action.component')
+                  .then(m => m.ConfigActionComponent),
                 canDeactivate: [SocketSubscriptionCleanGuard],
             }
         ]

@@ -1,0 +1,314 @@
+<div class="container">
+  <div class="row">
+    <div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+      <div class="ui-block">
+        <div class="ui-block-title">
+          <h3 class="title">Create Poker Configuration</h3>
+        </div>
+        <div class="ui-block-content">
+          <form
+              [formGroup]="form"
+              (ngSubmit)="onSubmit()"
+          >
+            <div class="row">
+              <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                <div
+                    class="form-group"
+                    [ngClass]="{'has-error': hasValidationError('name')}"
+                >
+                  <label for="name" class="control-label">Configuration name</label>
+                  <input
+                      formControlName="name"
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      placeholder="Configuration name"
+                  >
+                </div>
+
+                <!-- Sizes Config -->
+                <h4>Sizes Config</h4>
+                <div class="row">
+                  <div class="col col-lg-8 col-md-8 col-sm-8 col-8"></div>
+                  <div class="col col-lg-4 col-md-4 col-sm-4 col-4">
+                    <button
+                        (click)="addSizeConfig()"
+                        class="btn btn-blue btn-secondary full-width"
+                        type="button"
+                    >
+                      Add Size
+                    </button>
+                  </div>
+                </div>
+
+                <div formArrayName="sizesConfig">
+                  @for (size of sizesConfig.controls; track size; let i = $index) {
+                    <div
+                        class="form-group card p-3 mb-3"
+                        [ngClass]="{'has-error': hasArrayValidationError('sizesConfig', i)}"
+                    >
+                      <div [formGroupName]="i">
+                        <div class="row">
+                          <div class="col col-lg-5 col-md-5 col-sm-5 col-5">
+                            <label class="control-label">Size Name</label>
+                            <input
+                                placeholder="Size name (e.g., S, M, L)"
+                                type="text"
+                                formControlName="name"
+                                class="form-control"
+                            >
+                          </div>
+                          <div class="col col-lg-5 col-md-5 col-sm-5 col-5">
+                            <label class="control-label">Value</label>
+                            <input
+                                placeholder="Value"
+                                type="number"
+                                formControlName="value"
+                                class="form-control"
+                                min="1"
+                            >
+                          </div>
+                          <div class="col col-lg-2 col-md-2 col-sm-2 col-2">
+                            <label class="control-label">&nbsp;</label>
+                            <button
+                                (click)="removeSizeConfig(i)"
+                                class="btn btn-danger full-width"
+                                type="button"
+                            >
+                              X
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <!-- Dimensions Config -->
+                <h4>Dimensions Config</h4>
+                <div class="row">
+                  <div class="col col-lg-8 col-md-8 col-sm-8 col-8"></div>
+                  <div class="col col-lg-4 col-md-4 col-sm-4 col-4">
+                    <button
+                        (click)="addDimensionConfig()"
+                        class="btn btn-blue btn-secondary full-width"
+                        type="button"
+                    >
+                      Add Dimension
+                    </button>
+                  </div>
+                </div>
+
+                <div formArrayName="dimensionsConfig">
+                  @for (dimension of dimensionsConfig.controls; track dimension; let dimIndex = $index) {
+                    <div
+                        class="form-group card p-3 mb-3"
+                        [ngClass]="{'has-error': hasArrayValidationError('dimensionsConfig', dimIndex)}"
+                    >
+                      <div [formGroupName]="dimIndex">
+                        <div class="row">
+                          <div class="col col-lg-8 col-md-8 col-sm-8 col-8">
+                            <label class="control-label">Dimension Name</label>
+                            <input
+                                placeholder="Dimension name (e.g., uncertainty, complexity)"
+                                type="text"
+                                formControlName="name"
+                                class="form-control"
+                            >
+                          </div>
+                          <div class="col col-lg-2 col-md-2 col-sm-2 col-2">
+                            <label class="control-label">&nbsp;</label>
+                            <button
+                                (click)="removeDimensionConfig(dimIndex)"
+                                class="btn btn-danger full-width"
+                                type="button"
+                            >
+                              X
+                            </button>
+                          </div>
+                        </div>
+
+                        <div formArrayName="sizeValues">
+                          @for (sizeValue of getSizeValuesField(dimIndex).controls; track sizeValue; let svIndex = $index) {
+                            <div [formGroupName]="svIndex" class="row mt-2">
+                              <div class="col col-lg-5 col-md-5 col-sm-5 col-5">
+                                <input
+                                    placeholder="Size name (e.g., S, M, L)"
+                                    type="text"
+                                    [value]="getSizeNameFromConfig(svIndex)"
+                                    class="form-control"
+                                    disabled
+                                >
+                              </div>
+                              <div class="col col-lg-5 col-md-5 col-sm-5 col-5">
+                                <input
+                                    placeholder="Value"
+                                    type="number"
+                                    formControlName="value"
+                                    class="form-control"
+                                    min="1"
+                                >
+                              </div>
+                              <div class="col col-lg-2 col-md-2 col-sm-2 col-2">
+                              </div>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <!-- Points Mapping -->
+                <h4>Points Mapping</h4>
+                <div class="row">
+                  <div class="col col-lg-8 col-md-8 col-sm-8 col-8"></div>
+                  <div class="col col-lg-4 col-md-4 col-sm-4 col-4">
+                    <button
+                        (click)="addPointsMapping()"
+                        class="btn btn-blue btn-secondary full-width"
+                        type="button"
+                    >
+                      Add Points Mapping
+                    </button>
+                  </div>
+                </div>
+
+                <div formArrayName="pointsMapping">
+                  @for (mapping of pointsMapping.controls; track mapping; let pmIndex = $index) {
+                    <div
+                        class="form-group card p-3 mb-3"
+                        [ngClass]="{'has-error': hasArrayValidationError('pointsMapping', pmIndex)}"
+                    >
+                      <div [formGroupName]="pmIndex">
+                        <div class="row">
+                          <div class="col col-lg-3 col-md-3 col-sm-3 col-3">
+                            <label class="control-label">Range Min</label>
+                            <input
+                                placeholder="Min"
+                                type="number"
+                                formControlName="totalRangeMin"
+                                class="form-control"
+                                min="0"
+                            >
+                          </div>
+                          <div class="col col-lg-3 col-md-3 col-sm-3 col-3">
+                            <label class="control-label">Range Max</label>
+                            <input
+                                placeholder="Max"
+                                type="number"
+                                formControlName="totalRangeMax"
+                                class="form-control"
+                                min="0"
+                            >
+                          </div>
+                          <div class="col col-lg-5 col-md-5 col-sm-5 col-5">
+                            <label class="control-label">Points</label>
+                            <input
+                                placeholder="Points"
+                                type="number"
+                                formControlName="points"
+                                class="form-control"
+                                min="1"
+                            >
+                          </div>
+                          <div class="col col-lg-1 col-md-1 col-sm-1 col-1">
+                            <label class="control-label">&nbsp;</label>
+                            <button
+                                (click)="removePointsMapping(pmIndex)"
+                                class="btn btn-danger full-width"
+                                type="button"
+                            >
+                              X
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <div class="row">
+                  <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                    <button type="submit" class="btn btn-primary btn-lg full-width">
+                      Save Configuration
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Live Preview -->
+                <div class="row mt-5">
+                  <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="ui-block">
+                      <div class="ui-block-title">
+                        <h3 class="title">Live Preview - Voting Interface</h3>
+                      </div>
+                      <div class="ui-block-content">
+                        <div class="row justify-content-center">
+                          @for (dimension of dimensionsConfig.controls; track dimension; let dimIndex = $index) {
+                            <div class="col col-lg-3 col-md-4 col-sm-6 col-12">
+                              <ng-container>
+                                <h3 class="text-center">{{ getDimensionName(dimIndex) }}</h3>
+                                @for (size of sizesConfig.controls; track size; let sizeIndex = $index) {
+                                  <button
+                                      class="btn btn-lg w-100 mb-2 btn-smoke btn-light-bg"
+                                      disabled
+                                  >
+                                    {{ getSizeNameFromConfig(sizeIndex) }}
+                                  </button>
+                                }
+                              </ng-container>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Points Calculation Preview -->
+                <div class="row mt-5">
+                  <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="ui-block">
+                      <div class="ui-block-title">
+                        <h3 class="title">Points Calculation Preview</h3>
+                      </div>
+                      <div class="ui-block-content">
+                        @if (form && pointsPreview && pointsPreview.length > 0) {
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                @for (dimension of dimensionsConfig.controls; track dimension; let dimIndex = $index) {
+                                  <th>{{ getDimensionName(dimIndex) }}</th>
+                                }
+                                <th>Total</th>
+                                <th>Points</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @for (combo of pointsPreview; track combo) {
+                                <tr>
+                                  @for (dimValue of combo.dimensions; track dimValue) {
+                                    <td>{{ dimValue }}</td>
+                                  }
+                                  <td><strong>{{ combo.total }}</strong></td>
+                                  <td><strong>{{ combo.points }}</strong></td>
+                                </tr>
+                              }
+                            </tbody>
+                          </table>
+                        } @else {
+                          <p class="text-center">Add sizes and dimensions to see points calculation preview</p>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
