@@ -94,13 +94,14 @@ export class CreateActionComponent implements OnDestroy, OnInit
         this.hasSubmit = true;
         if (this.form.valid)
         {
-            this.log.info("Create poker", this.form.getRawValue());
+            this.log.info("Creating poker", this.form.getRawValue());
 
             this.rxStompService.publish(
               SocketDestination.RECEIVE_POKER_START,
               {
-                  sprintTitle:           this.forms.getField("name").getRawValue(),
-                  ticketNames:           this.form.getRawValue().ticketNames.flatMap(tn => tn.name),
+                  sprintTitle:      this.forms.getField("name").getRawValue(),
+                  ticketNames:      this.form.getRawValue().ticketNames.flatMap(tn => tn.name),
+                  storyPointConfig: 1,
               }
             );
         }

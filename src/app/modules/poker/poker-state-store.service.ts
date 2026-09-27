@@ -27,6 +27,7 @@ export class PokerStateStore
         userVotes:                    {},
         initDone:                     false,
         finishedTicketIds:            [],
+        storyPointConfig:             null,
     };
 
     private stateBS = new BehaviorSubject<IPokerState>(this._state);
@@ -80,9 +81,12 @@ export class PokerStateStore
 
     public addFinishedTicketId(ticketId: number): void
     {
-        const updatedFinishedTicketIds = [...this._state.finishedTicketIds];
-        updatedFinishedTicketIds.push(ticketId);
-        this.updateState({finishedTicketIds: updatedFinishedTicketIds});
+        if (!this._state.finishedTicketIds.includes(ticketId))
+        {
+            const updatedFinishedTicketIds = [...this._state.finishedTicketIds];
+            updatedFinishedTicketIds.push(ticketId);
+            this.updateState({finishedTicketIds: updatedFinishedTicketIds});
+        }
     }
 
     public setUserVotes(ticketId: string, votes: any): void
@@ -185,6 +189,7 @@ export class PokerStateStore
             userVotes:                    {},
             initDone:                     false,
             finishedTicketIds:            [],
+            storyPointConfig:             null,
         };
         this.stateBS.next(this._state);
     }

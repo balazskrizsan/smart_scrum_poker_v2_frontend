@@ -4,6 +4,7 @@ import {IStateResponse}  from "../interfaces/i-state-response";
 import {PokerStateStore} from "../poker-state-store.service";
 import {LoggingService}  from "../../../services/logging.service";
 import {LoggingGroup}    from "../../../services/enums/logging-group";
+import {IStoryPointConfig} from "../interfaces/i-story-point-config";
 
 @Injectable()
 export class GameStateService
@@ -57,9 +58,51 @@ export class GameStateService
             idsUsersWithSession: idsUsersWithSession,
             activeTicketId:      activeTicketId,
             openedTicketId:      openedTicketId,
-            initDone:            true
+            initDone:            true,
+            storyPointConfig:    this.parseStoryPointConfig(body.data.storyPointConfig)
         });
 
         this.log.info("Poker state set", this.pokerStateStore.state);
+    }
+
+    private parseStoryPointConfig(config: any): IStoryPointConfig
+    {
+        try
+        {
+            if (typeof config.dimensionsConfig === 'string')
+            {
+                config.dimensionsConfig = JSON.parse(config.dimensionsConfig);
+            }
+
+            if (typeof config.sizesConfig === 'string')
+            {
+                config.sizesConfig = JSON.parse(config.sizesConfig);
+            }
+
+            if (typeof config.pointsMapping === 'string')
+            {
+                config.pointsMapping = JSON.parse(config.pointsMapping);
+            }
+
+            if (Array.isArray(config.dimensionsConfig))
+            {
+                config.dimensionsConfig = config.dimensionsConfig.map((dimension: any) =>
+                {
+                    if (typeof dimension.sizeValues === 'string')
+                    {
+                        dimension.sizeValues = JSON.parse(dimension.sizeValues);
+                    }
+                    return dimension;
+                });
+            }
+
+            return config;
+        }
+        catch (e)
+        {
+            console.error('Error parsing storyPointConfig:', e);
+
+            return config;
+        }
     }
 }

@@ -1,6 +1,9 @@
 import {
     Component,
     Input,
+    OnInit,
+    OnChanges,
+    SimpleChanges
 }                          from "@angular/core";
 import {SocketDestination} from "../../commons/enums/socket-destination";
 import {RxStompService}    from "../../commons/services/rx-stomp-service";
@@ -11,6 +14,7 @@ import {
     KeyValue
 }                          from "@angular/common";
 import {IdsUserService}    from "../../../services/ids-user-service";
+import {IStoryPointConfig} from "../interfaces/i-story-point-config";
 
 @Component({
     selector:    'app-voter-table',
@@ -19,34 +23,80 @@ import {IdsUserService}    from "../../../services/ids-user-service";
     templateUrl: './views/voter-table.html',
     providers:   [],
 })
-export class VoterTableComponent
+export class VoterTableComponent implements OnInit, OnChanges
 {
     @Input() state: IPokerState;
     @Input() ticket: ITicket;
-    protected voteTypeIdMap = {
-        0: "uncertainty",
-        1: "complexity",
-        2: "effort",
-        3: "risk",
-    };
-    protected votes = {
-        uncertainty: 0,
-        complexity:  0,
-        effort:      0,
-        risk:        0,
-    };
-    protected voteConfig: Array<Record<number, Record<string, number>>> = [
-        {0: {"SMALL": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 10}},
-        {1: {"SMALL": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 10}},
-        {2: {"SMALL": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 10}},
-        {3: {"SMALL": 1, "MEDIUM": 2, "LARGE": 3, "XXL": 10}},
-    ];
+    protected votes: Record<string, number> = {};
 
     constructor(
       private rxStompService: RxStompService,
       private idsUserService: IdsUserService,
     )
     {
+    }
+
+    ngOnInit(): void
+    {
+        this.initializeVotes();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void
+    {
+        if (changes['state'] && changes['state'].currentValue)
+        {
+            this.initializeVotes();
+        }
+    }
+
+    private initializeVotes(): void
+    {
+        if (this.state.storyPointConfig?.dimensionsConfig && Array.isArray(this.state.storyPointConfig.dimensionsConfig))
+        {
+            this.state.storyPointConfig.dimensionsConfig.forEach(dimension =>
+            {
+                const dimensionName = dimension.name.toLowerCase();
+                this.votes[dimensionName] = 0;
+            });
+        }
+    }
+
+    protected get voteTypeIdMap(): Record<number, string>
+    {
+        if (!this.state.storyPointConfig?.dimensionsConfig || !Array.isArray(this.state.storyPointConfig.dimensionsConfig))
+        {
+            return {};
+        }
+
+        const map: Record<number, string> = {};
+        this.state.storyPointConfig.dimensionsConfig.forEach((dimension, index) =>
+        {
+            map[index] = dimension.name.toLowerCase();
+        });
+
+        return map;
+    }
+
+    protected get voteConfig(): Array<Record<string, Record<string, number>>>
+    {
+        if (!this.state.storyPointConfig?.dimensionsConfig || !Array.isArray(this.state.storyPointConfig.dimensionsConfig))
+        {
+            return [];
+        }
+
+        return this.state.storyPointConfig.dimensionsConfig.map((dimension, index) =>
+        {
+            const sizeValues: Record<string, number> = {};
+            if (Array.isArray(dimension.sizeValues))
+            {
+                dimension.sizeValues.forEach(sizeValue =>
+                {
+                    sizeValues[sizeValue.name] = sizeValue.value;
+                });
+            }
+
+            return {[index.toString()]: sizeValues};
+        });
     }
 
     protected asStringNumberRecord(obj: object): Record<string, number>
@@ -69,23 +119,46 @@ export class VoterTableComponent
 
     protected isVoteSendable(): boolean
     {
-        return this.votes.uncertainty > 0 && this.votes.complexity > 0 && this.votes.effort > 0 && this.votes.risk > 0;
+        if (!this.state.storyPointConfig?.dimensionsConfig || !Array.isArray(this.state.storyPointConfig.dimensionsConfig))
+        {
+            return false;
+        }
+
+        const dimensionNames = this.state.storyPointConfig.dimensionsConfig.map(d => d.name.toLowerCase());
+        return dimensionNames.every(name => this.votes[name] > 0);
     }
 
     protected send()
     {
+        const dimensionValues: Record<string, string> = {};
+
+        if (this.state.storyPointConfig?.dimensionsConfig && Array.isArray(this.state.storyPointConfig.dimensionsConfig))
+        {
+            this.state.storyPointConfig.dimensionsConfig.forEach(dimension =>
+            {
+                const dimensionName = dimension.name.toLowerCase();
+                const selectedValue = this.votes[dimensionName];
+
+                // Find the size name for the selected value
+                if (Array.isArray(dimension.sizeValues))
+                {
+                    const sizeValue = dimension.sizeValues.find(sv => sv.value === selectedValue);
+                    if (sizeValue)
+                    {
+                        dimensionValues[dimensionName] = sizeValue.name;
+                    }
+                }
+            });
+        }
+
         this.rxStompService.publish(
           SocketDestination.SEND_POKER_VOTE
             .replace("{pokerIdSecure}", this.state.pokerPublicIdFromQueryParams)
             .replace("{ticketId}", this.ticket.id.toString(10)),
           {
-              userIdSecure:    this.idsUserService.sub,
-              pokerIdSecure:   this.state.pokerPublicIdFromQueryParams,
-              ticketId:        this.ticket.id,
-              voteUncertainty: this.votes.uncertainty,
-              voteComplexity:  this.votes.complexity,
-              voteEffort:      this.votes.effort,
-              voteRisk:        this.votes.risk,
+              pokerPublicId:    this.state.pokerPublicIdFromQueryParams,
+              ticketId:         this.ticket.id,
+              dimensionValues:  dimensionValues
           }
         );
     }

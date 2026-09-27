@@ -4,4 +4,5 @@ export interface IPoker
   publicId: string;
   name: string;
   createdAt: string;
+  storyPointConfigId: number;
 }

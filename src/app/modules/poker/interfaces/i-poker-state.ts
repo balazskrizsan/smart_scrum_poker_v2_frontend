@@ -3,6 +3,7 @@ import {IPoker}       from "./i-poker";
 import {IVote}     from "./i-vote";
 import {IVoteStat} from "./i-vote-stat";
 import {ITicket}       from "./i-ticket";
+import {IStoryPointConfig} from "./i-story-point-config";
 
 export interface IPokerState
 {
@@ -19,4 +20,5 @@ export interface IPokerState
     userVotes: Record<number, Record<string, IVote>>;
     initDone: boolean;
     finishedTicketIds: Array<number>;
+    storyPointConfig: IStoryPointConfig;
 }

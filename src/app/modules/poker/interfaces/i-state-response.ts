@@ -3,6 +3,7 @@ import {ITicket}            from "./i-ticket";
 import {IUserProfile}       from "../../account/interfaces/i-user-profile";
 import {IVotesWithVoteStat} from "./i-votes-with-vote-stat";
 import {IIdsUser} from "../../account/interfaces/i-ids-user";
+import {IStoryPointConfig} from "./i-story-point-config";
 
 export interface IStateResponse
 {
@@ -15,4 +16,5 @@ export interface IStateResponse
     votesWithVoteStatList: Record<number, IVotesWithVoteStat>;
     currentIdsUser: IIdsUser;
     currentUserProfile: IUserProfile;
+    storyPointConfig: IStoryPointConfig;
 }
