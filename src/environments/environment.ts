@@ -13,7 +13,7 @@ export const environment = {
     production:     false,
     loggingService: {
         levels: {
-            default: LoggingLevel.ERROR,
+            default: LoggingLevel.INFO,
             groups:  loggingGroups,
         }
     },
@@ -26,10 +26,10 @@ export const environment = {
     },
     backend:        {
         api:     {
-            host: 'https://localhost.balazskrizsan.com:3000/'
+            host: 'https://localhost.balazskrizsan.com:4000/'
         },
         wss_api: {
-            host: 'wss://localhost.balazskrizsan.com:3000/ws'
+            host: 'wss://localhost.balazskrizsan.com:4000/ws'
         }
     },
     ids:            {
