@@ -15,13 +15,17 @@ import {IdsUserService}        from "../../../services/ids-user-service";
 import {LoggingService}        from "../../../services/logging.service";
 import {LoggingGroup}          from "../../../services/enums/logging-group";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class RxStompService
 {
     private authLoggingService = new LoggingService().setGroups(LoggingGroup.OIDC);
     private socketLoggingService = new LoggingService().setGroups(LoggingGroup.SOCKET);
     private rxStomp: RxStomp = null;
     private headers: any = {};
+    private currentToken: string = null;
+    private isConnecting: boolean = false;
 
     constructor(
       private authService: AuthService,
@@ -76,21 +80,44 @@ export class RxStompService
 
     private setupStompConnection(): void
     {
+        if (this.isConnecting) return;
+
         this.authService.getAccessToken$().pipe(take(1)).subscribe(token =>
         {
-            if (token)
+            if (!token) return;
+
+            if (this.currentToken === token && this.rxStomp && this.rxStomp.connected())
             {
-                this.headers["Authorization"] = "Bearer " + token;
-                this.rxStomp.configure({
-                    brokerURL:      environment.backend.wss_api.host,
-                    connectHeaders: this.headers,
-                });
-                this.rxStomp.deactivate().then(() =>
-                {
-                    this.rxStomp.activate();
-                });
-                this.socketLoggingService.info("Reconnect done");
+                this.socketLoggingService.info("Already connected with valid token, skipping reconnect");
+                return;
             }
+
+            this.isConnecting = true;
+            this.currentToken = token;
+            this.headers["Authorization"] = "Bearer " + token;
+
+            if (!this.rxStomp)
+            {
+                this.rxStomp = new RxStomp();
+            }
+
+            this.rxStomp.configure({
+                brokerURL:      environment.backend.wss_api.host,
+                connectHeaders: this.headers,
+            });
+
+            this.rxStomp.deactivate().then(() =>
+            {
+                return this.rxStomp.activate();
+            }).then(() =>
+            {
+                this.isConnecting = false;
+                this.socketLoggingService.info("Reconnect done");
+            }).catch(err =>
+            {
+                this.isConnecting = false;
+                this.socketLoggingService.error("Connection error:", err);
+            });
         });
     }
 
@@ -101,21 +128,12 @@ export class RxStompService
             return this.rxStomp;
         }
 
-        this.rxStomp = new RxStomp();
-
-        this.authService.getAccessToken$().pipe(take(1)).subscribe(token =>
+        if (!this.rxStomp)
         {
-            if (token)
-            {
-                this.headers["Authorization"] = "Bearer " + token;
-                this.rxStomp.configure({
-                    brokerURL:      environment.backend.wss_api.host,
-                    connectHeaders: this.headers,
-                });
-                this.rxStomp.activate();
-                this.socketLoggingService.info("Socket connected with token");
-            }
-        });
+            this.rxStomp = new RxStomp();
+        }
+
+        this.setupStompConnection();
 
         return this.rxStomp;
     }
